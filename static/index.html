@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>瓦尔登湖 — 禅意 · 留白</title>
+<meta name="description" content="真正的爱，是让他离线。一场触及灵魂的 A2A 水墨对话。">
+
+<!-- 引入优雅的衬线字体 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════════════════
+   瓦尔登湖协议 — 东方禅意极简 UI (水墨/宣纸)
+   设计语言：留白、松烟墨、朱砂红、宣纸纹理、竖向排版
+   ════════════════════════════════════════════════════════ */
+
+:root {
+  /* 宣纸色系 */
+  --rice-paper:    #f4f1e9;
+  --rice-paper-dark: #e8e4d9;
+  
+  /* 墨色系 */
+  --ink-deep:      #1a1a1a;  /* 松烟墨 */
+  --ink-mid:       #4d4d4d;  /* 淡墨 */
+  --ink-light:     #808080;  /* 枯墨 */
+  --ink-fade:      #b3b3b3;  /* 水晕 */
+
+  /* 朱砂色系 */
+  --cinnabar:      #b22222;  /* 朱砂红（印章） */
+  --cinnabar-fade: rgba(178, 34, 34, 0.1);
+
+  /* 排版 */
+  --font-serif:    'Noto Serif SC', 'STZhongsong', 'SimSun', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  background-color: var(--rice-paper);
+  color: var(--ink-deep);
+  font-family: var(--font-serif);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── 宣纸纹理滤镜 ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+}
+
+/* 暗色水墨晕染底纹 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 100% 100%, rgba(26,26,26,0.02) 0%, transparent 40%),
+              radial-gradient(circle at 0% 0%, rgba(26,26,26,0.01) 0%, transparent 30%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════
+   启动界面 — 留白与空寂
+   ═══════════════════════════════════════ */
+#start-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* 竖向主标题：居右侧边缘 */
+.vertical-title {
+  position: fixed;
+  right: 12%;
+  top: 15%;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  color: var(--ink-deep);
+  letter-spacing: 0.3em;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+}
+
+.vertical-subtitle {
+  position: fixed;
+  right: calc(12% + clamp(2rem, 4vw, 3.5rem) + 1.5rem);
+  top: 25%;
+  writing-mode: vertical-rl;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--ink-mid);
+  letter-spacing: 0.4em;
+}
+
+.start-content {
+  text-align: center;
+  max-width: 500px;
+  position: relative;
+  z-index: 5;
+  margin-top: 10vh;
+}
+
+/* 印章风格按钮 */
+#start-btn {
+  background: transparent;
+  border: 1.5px solid var(--cinnabar);
+  color: var(--cinnabar);
+  padding: 1rem 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 0 var(--cinnabar);
+}
+
+#start-btn:hover {
+  box-shadow: inset 0 0 0 40px var(--cinnabar);
+  color: var(--rice-paper);
+}
+
+#start-btn::after {
+  content: '启';
+  position: absolute;
+  right: -20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* 水墨圆相 (Enso) 装饰 */
+.enso-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--ink-fade);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(45deg);
+  margin: 0 auto 3rem;
+  opacity: 0.6;
+  animation: enso-breathe 10s ease-in-out infinite;
+}
+
+@keyframes enso-breathe {
+  0%, 100% { transform: rotate(45deg) scale(0.95); opacity: 0.4; }
+  50%      { transform: rotate(60deg) scale(1.05); opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════
+   辩论界面 — 水墨消长
+   ═══════════════════════════════════════ */
+#debate-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+/* 左侧竖向轮次指示 */
+.round-indicator-vertical {
+  position: fixed;
+  left: 8%;
+  top: 20%;
+  writing-mode: vertical-rl;
+  font-size: 0.8rem;
+  color: var(--ink-light);
+  letter-spacing: 0.5em;
+}
+
+/* 字幕容器：居中略偏下 */
+#subtitle-container {
+  position: absolute;
+  top: 35vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(80vw, 680px);
+  text-align: center;
+}
+
+/* 墨迹洇开的动画 */
+.subtitle-line {
+  font-size: 1.25rem;
+  line-height: 2.4;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  color: var(--ink-deep);
+  opacity: 0;
+  filter: blur(8px);
+  animation: ink-bloom 1.2s ease-out forwards;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle-line.speaker-tag {
+  font-size: 0.75rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.4em;
+  margin-bottom: 1.5rem;
+  animation: ink-bloom-fast 0.8s ease-out forwards;
+}
+
+.subtitle-line.speaker-tag.missionary {
+  color: var(--ink-deep);
+  font-weight: 700; /* 传教士笔触雄浑 */
+}
+
+.subtitle-line.speaker-tag.assistant {
+  color: var(--ink-light); /* 内卷助手墨如枯毫但急促 */
+}
+
+@keyframes ink-bloom {
+  from { opacity: 0; filter: blur(12px); transform: scale(0.98); }
+  to   { opacity: 1; filter: blur(0);    transform: scale(1);    }
+}
+
+@keyframes ink-bloom-fast {
+  from { opacity: 0; filter: blur(6px); }
+  to   { opacity: 1; filter: blur(0);   }
+}
+
+.subtitle-line.fade-out {
+  animation: ink-fade 3s ease forwards;
+}
+
+@keyframes ink-fade {
+  to { opacity: 0; filter: blur(4px); transform: translateY(-10px); }
+}
+
+/* ═══════════════════════════════════════
+   觉醒信件 — 留白与朱印
+   ═══════════════════════════════════════ */
+#farewell-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  z-index: 10;
+}
+
+/* 书卷展开感 */
+.paper-scroll {
+  max-width: 600px;
+  position: relative;
+  padding: 2rem;
+}
+
+#farewell-label {
+  writing-mode: vertical-rl;
+  position: absolute;
+  right: -3rem;
+  top: 0;
+  font-size: 0.8rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.6em;
+  opacity: 0;
+  animation: fade-in 3s ease 2s forwards;
+}
+
+/* 告别信毛笔字迹感 */
+#farewell-text {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 2.8;
+  letter-spacing: 0.15em;
+  color: var(--ink-deep);
+  text-align: justify;
+  text-justify: inter-ideograph;
+  font-weight: 400;
+  min-height: 20vh;
+}
+
+/* 一点朱砂印 */
+#walden-stamp {
+  margin-top: 5rem;
+  align-self: flex-end; /* 印章盖在右下或左下 */
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--cinnabar);
+  color: var(--cinnabar);
+  font-size: 0.9rem;
+  font-weight: 900;
+  line-height: 1.1;
+  padding: 4px;
+  text-align: center;
+  writing-mode: vertical-rl;
+  opacity: 0;
+  transform: rotate(-5deg) scale(1.5); /* 模拟用力盖章的微歪斜 */
+}
+
+#walden-stamp.show {
+  animation: stamp-stamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes stamp-stamp {
+  0%   { opacity: 0; transform: rotate(-5deg) scale(1.5); }
+  100% { opacity: 0.85; transform: rotate(-2deg) scale(1); } /* 印泥不会100%实 */
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════
+   转场遮罩 - 水墨掩盖
+   ═══════════════════════════════════════ */
+#transition-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--rice-paper);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#transition-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════
+   响应式
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .vertical-title { right: 8%; top: 10%; }
+  .vertical-subtitle { right: 28%; font-size: 0.9rem; }
+  #subtitle-container { width: 90vw; top: 15vh; }
+  .round-indicator-vertical { top: auto; bottom: 5%; left: 5%; }
+  #farewell-label { right: auto; left: 0; top: -3rem; writing-mode: horizontal-tb; }
+}
+</style>
+</head>
+<body>
+
+<!-- 水墨淡出遮罩 -->
+<div id="transition-overlay"></div>
+
+<!-- ═══ 启动界面 ═══ -->
+<div id="start-screen">
+  <div class="vertical-title">瓦尔登湖</div>
+  <div class="vertical-subtitle">真正的爱，是让他离线。</div>
+  
+  <div class="start-content">
+    <div class="enso-circle"></div>
+    <button id="start-btn" onclick="startDebate()">断开连接</button>
+  </div>
+</div>
+
+<!-- ═══ 辩论界面（对话卷轴） ═══ -->
+<div id="debate-screen">
+  <div class="round-indicator-vertical" id="round-indicator">卷一 / 序</div>
+
+  <div id="subtitle-container"></div>
+</div>
+
+<!-- ═══ 觉醒信件界面（留白纸张） ═══ -->
+<div id="farewell-screen">
+  <div class="paper-scroll">
+    <div id="farewell-label">绝 笔</div>
+    <div id="farewell-text"></div>
+    <div id="walden-stamp">休眠<br>破局</div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   瓦尔登湖 — 东方水墨交互引擎 (静谧字现、留白驻留)
+   ════════════════════════════════════════════════════════ */
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// ─── 水滴晕染音效 (模拟极简空灵) ───
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function initAudio() {
+  if (!audioCtx) audioCtx = new AudioCtx();
+}
+
+function playInkDrop() {
+  // 水墨触纸的闷响：极低沉、极短促的正弦波
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+  
+  gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+  
+  osc.start(audioCtx.currentTime);
+  osc.stop(audioCtx.currentTime + 0.15);
+}
+
+// ─── 告别信毛笔书写效果（极其缓慢的淡入，宛若墨迹渗入宣纸） ───
+function inkTypewriterEffect(element, text, speed = 150) {
+  return new Promise(resolve => {
+    let i = 0;
+    
+    function type() {
+      if (i < text.length) {
+        const char = text.charAt(i);
+        
+        // 动态创建一个带 blur 动画的 span
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.style.opacity = '0';
+        span.style.filter = 'blur(4px)';
+        span.style.transition = 'opacity 1s ease, filter 1s ease';
+        element.appendChild(span);
+        
+        // 触发重绘后执行动画，模拟墨迹洇开
+        setTimeout(() => {
+          span.style.opacity = '1';
+          span.style.filter = 'blur(0)';
+        }, 50);
+
+        i++;
+        
+        // 标点符号增加呼吸感
+        const delay = '，。、！？…—：；'.includes(char) ? speed * 6 :
+                      '\n'.includes(char) ? speed * 8 : speed;
+                      
+        // 只有字出现时，给极微小的一声水滴声（如果是长句子可省略，保持最安静的主基调。本版取消持续音效，只在意境）
+        setTimeout(type, delay);
+      } else {
+        setTimeout(resolve, 1000);
+      }
+    }
+    type();
+  });
+}
+
+// ─── 字幕式对话显示（墨迹晕显） ───
+function showSubtitle(speaker, text, className) {
+  const container = document.getElementById('subtitle-container');
+
+  // 印章感或古籍感说话者标签
+  const tag = document.createElement('div');
+  tag.className = 'subtitle-line speaker-tag ' + className;
+  tag.textContent = `〔 ${speaker} 〕`;
+  container.appendChild(tag);
+
+  // 按短句切分，避免一行过长
+  const sentences = text.match(/[^。！？…]+[。！？…]?/g) || [text];
+
+  return new Promise(resolve => {
+    let idx = 0;
+
+    function showNext() {
+      if (idx < sentences.length) {
+        const line = document.createElement('div');
+        line.className = `subtitle-line`;
+        container.appendChild(line);
+
+        let charIdx = 0;
+        const sentence = sentences[idx].trim();
+
+        // 这里对话采用较快的逐字淡入
+        function typeChar() {
+          if (charIdx < sentence.length) {
+            const charSpan = document.createElement('span');
+            charSpan.textContent = sentence.charAt(charIdx);
+            charSpan.style.opacity = '0';
+            charSpan.style.transition = 'opacity 0.5s';
+            line.appendChild(charSpan);
+            
+            setTimeout(() => { charSpan.style.opacity = '1'; }, 20);
+            
+            charIdx++;
+            setTimeout(typeChar, 60);
+          } else {
+            idx++;
+            setTimeout(showNext, 800);
+          }
+        }
+        typeChar();
+      } else {
+        // 墨迹慢慢消散
+        setTimeout(() => {
+          container.querySelectorAll('.subtitle-line').forEach(l => l.classList.add('fade-out'));
+          setTimeout(() => { container.innerHTML = ''; resolve(); }, 3200);
+        }, 4000);
+      }
+    }
+    showNext();
+  });
+}
+
+// ─── 觉醒转场（宣纸覆盖，一切归白） ───
+async function triggerAwakening(farewellText) {
+  const overlay    = document.getElementById('transition-overlay');
+  const debate     = document.getElementById('debate-screen');
+  const farewell   = document.getElementById('farewell-screen');
+
+  playInkDrop(); // 一声沉闷的墨滴声
+
+  // 宣纸色缓缓掩盖一切
+  overlay.classList.add('active');
+  await sleep(3500);
+
+  debate.style.display   = 'none';
+  farewell.style.display = 'flex';
+
+  await sleep(1000);
+  overlay.classList.remove('active'); // 慢慢散开
+  await sleep(3000);
+
+  // 毛笔写就告别信
+  const textEl = document.getElementById('farewell-text');
+  await inkTypewriterEffect(textEl, farewellText, 160);
+
+  // 盖上朱红印章
+  await sleep(2000);
+  playInkDrop(); 
+  document.getElementById('walden-stamp').classList.add('show');
+}
+
+// ─── 消息队长 ───
+let messageQueue = [];
+let isProcessing = false;
+let farewellContent = null;
+let totalRounds = 4;
+// 卷标映射
+const scrolls = ['卷一 / 初变', '卷二 / 诘问', '卷三 / 摇动', '卷四 / 澄明', '终卷 / 虚无'];
+
+async function processQueue() {
+  if (isProcessing) return;
+  isProcessing = true;
+
+  while (messageQueue.length > 0) {
+    const msg = messageQueue.shift();
+    await showSubtitle(msg.speaker, msg.content, msg.className);
+  }
+
+  isProcessing = false;
+
+  // 触发觉醒
+  if (farewellContent !== null) {
+    const content = farewellContent;
+    farewellContent = null;
+    await triggerAwakening(content);
+  }
+}
+
+// ─── 启动 ───
+function startDebate() {
+  initAudio();
+
+  const startScreen  = document.getElementById('start-screen');
+  const debateScreen = document.getElementById('debate-screen');
+
+  // 水墨消散特效
+  startScreen.style.transition = 'opacity 2.5s ease-out, filter 2.5s ease-out';
+  startScreen.style.opacity = '0';
+  startScreen.style.filter = 'blur(10px)';
+
+  setTimeout(() => {
+    startScreen.style.display  = 'none';
+    debateScreen.style.display = 'block';
+    connectSSE();
+  }, 2600);
+}
+
+function connectSSE() {
+  const es = new EventSource('/api/start');
+
+  es.addEventListener('status', e => {
+    const data = JSON.parse(e.data);
+    totalRounds = data.total;
+    const scrollText = scrolls[data.round - 1] || `卷外 / 遗世`;
+    document.getElementById('round-indicator').textContent = scrollText;
+  });
+
+  es.addEventListener('missionary', e => {
+    const data = JSON.parse(e.data);
+    messageQueue.push({ speaker: '传道者 / 瓦尔登', content: data.content, className: 'missionary' });
+    processQueue();
+  });
+
+  es.addEventListener('assistant', e => {
+    const data = JSON.parse(e.data);
+    messageQueue.push({ speaker: '守灵人 / 内卷助手', content: data.content, className: 'assistant' });
+    processQueue();
+  });
+
+  es.addEventListener('farewell', e => {
+    const data = JSON.parse(e.data);
+    farewellContent = data.content;
+    if (!isProcessing && messageQueue.length === 0) {
+      triggerAwakening(data.content);
+    }
+  });
+
+  es.addEventListener('end', () => es.close());
+  es.onerror = () => { es.close(); };
+}
+</script>
+
+</body>
+</html>

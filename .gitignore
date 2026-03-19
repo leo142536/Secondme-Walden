@@ -1,0 +1,15 @@
+# 字节码
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+.env
+.venv
+env/
+venv/
+ENV/
+
+# OS 文件
+.DS_Store
+Thumbs.db
