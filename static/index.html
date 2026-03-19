@@ -3,76 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>瓦尔登湖 — 禅意 · 留白</title>
-<meta name="description" content="真正的爱，是让他离线。一场触及灵魂的 A2A 水墨对话。">
+<title>瓦尔登湖 — Walden</title>
+<meta name="description" content="真正的爱，是让他离线。一场触及灵魂的 A2A 对话。">
 
-<!-- 引入优雅的衬线字体 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 /* ════════════════════════════════════════════════════════
-   瓦尔登湖协议 — 东方禅意极简 UI (水墨/宣纸)
-   设计语言：留白、松烟墨、朱砂红、宣纸纹理、竖向排版
+   瓦尔登湖 — 电影微距自然风 UI
+   设计语言：森林暮光、苔藓质感、金色侧光、有机呼吸
    ════════════════════════════════════════════════════════ */
 
 :root {
-  /* 宣纸色系 */
-  --rice-paper:    #f4f1e9;
-  --rice-paper-dark: #e8e4d9;
-  
-  /* 墨色系 */
-  --ink-deep:      #1a1a1a;  /* 松烟墨 */
-  --ink-mid:       #4d4d4d;  /* 淡墨 */
-  --ink-light:     #808080;  /* 枯墨 */
-  --ink-fade:      #b3b3b3;  /* 水晕 */
+  /* 森林色系 */
+  --deep-earth:    #0c0f08;   /* 深层腐殖土 */
+  --forest-dark:   #161c10;   /* 暗林 */
+  --moss:          #2d3a1e;   /* 苔藓绿 */
+  --fern:          #4a6b2a;   /* 蕨类 */
+  --leaf:          #6b8f3c;   /* 新叶 */
 
-  /* 朱砂色系 */
-  --cinnabar:      #b22222;  /* 朱砂红（印章） */
-  --cinnabar-fade: rgba(178, 34, 34, 0.1);
+  /* 光线色系 */
+  --golden:        #d4a843;   /* 金色侧光 */
+  --golden-soft:   rgba(212, 168, 67, 0.15);
+  --amber:         #c4873a;   /* 琥珀暖光 */
+  --cream:         #f0ead6;   /* 奶油白（文字） */
+  --mist:          rgba(240, 234, 214, 0.6); /* 晨雾 */
 
   /* 排版 */
-  --font-serif:    'Noto Serif SC', 'STZhongsong', 'SimSun', serif;
+  --font-serif:    'Noto Serif SC', 'Georgia', serif;
+  --font-sans:     'Inter', -apple-system, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 
 body {
-  background-color: var(--rice-paper);
-  color: var(--ink-deep);
+  background: var(--deep-earth);
+  color: var(--cream);
   font-family: var(--font-serif);
   min-height: 100vh;
   overflow: hidden;
   position: relative;
 }
 
-/* ─── 宣纸纹理滤镜 ─── */
+/* ─── 背景：森林暮光层叠 ─── */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(74, 107, 42, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(212, 168, 67, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(45, 58, 30, 0.3) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
-  mix-blend-mode: multiply;
 }
 
-/* 暗色水墨晕染底纹 */
+/* 电影胶片颗粒 */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 100% 100%, rgba(26,26,26,0.02) 0%, transparent 40%),
-              radial-gradient(circle at 0% 0%, rgba(26,26,26,0.01) 0%, transparent 30%);
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
+  mix-blend-mode: soft-light;
 }
 
 /* ═══════════════════════════════════════
-   启动界面 — 留白与空寂
+   启动界面 — 森林清晨
    ═══════════════════════════════════════ */
 #start-screen {
   position: fixed;
@@ -84,91 +85,101 @@ body::after {
   z-index: 10;
 }
 
-/* 竖向主标题：居右侧边缘 */
-.vertical-title {
-  position: fixed;
-  right: 12%;
-  top: 15%;
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 900;
-  color: var(--ink-deep);
-  letter-spacing: 0.3em;
-  opacity: 0.9;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
-}
-
-.vertical-subtitle {
-  position: fixed;
-  right: calc(12% + clamp(2rem, 4vw, 3.5rem) + 1.5rem);
-  top: 25%;
-  writing-mode: vertical-rl;
-  font-size: 1.1rem;
-  font-weight: 300;
-  color: var(--ink-mid);
-  letter-spacing: 0.4em;
-}
-
 .start-content {
   text-align: center;
-  max-width: 500px;
-  position: relative;
-  z-index: 5;
-  margin-top: 10vh;
+  max-width: 600px;
+  padding: 2rem;
 }
 
-/* 印章风格按钮 */
+/* 叶脉光环 */
+.leaf-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid rgba(106, 143, 60, 0.3);
+  margin: 0 auto 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: ring-breathe 8s ease-in-out infinite;
+}
+
+.leaf-ring::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--leaf);
+  border-radius: 50%;
+  box-shadow: 0 0 20px var(--leaf), 0 0 60px rgba(106, 143, 60, 0.3);
+}
+
+@keyframes ring-breathe {
+  0%, 100% { transform: scale(0.95); opacity: 0.5; border-color: rgba(106, 143, 60, 0.15); }
+  50%      { transform: scale(1.08); opacity: 1;   border-color: rgba(106, 143, 60, 0.5); }
+}
+
+.start-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 200;
+  letter-spacing: 0.2em;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 30px rgba(212, 168, 67, 0.1);
+}
+
+.start-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--golden);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.start-desc {
+  font-size: 0.95rem;
+  color: rgba(240, 234, 214, 0.45);
+  line-height: 2.2;
+  font-weight: 300;
+  margin-bottom: 4rem;
+}
+
 #start-btn {
   background: transparent;
-  border: 1.5px solid var(--cinnabar);
-  color: var(--cinnabar);
-  padding: 1rem 1.5rem;
+  border: 1px solid rgba(106, 143, 60, 0.4);
+  color: var(--leaf);
+  padding: 0.8rem 2.5rem;
   font-family: var(--font-serif);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.4em;
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
   cursor: pointer;
-  transition: all 0.5s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 0 var(--cinnabar);
+  border-radius: 2px;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #start-btn:hover {
-  box-shadow: inset 0 0 0 40px var(--cinnabar);
-  color: var(--rice-paper);
+  background: rgba(106, 143, 60, 0.1);
+  border-color: var(--leaf);
+  color: var(--cream);
+  box-shadow: 0 0 40px rgba(106, 143, 60, 0.08);
 }
 
-#start-btn::after {
-  content: '启';
-  position: absolute;
-  right: -20px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-/* 水墨圆相 (Enso) 装饰 */
-.enso-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 4px solid var(--ink-fade);
-  border-right-color: transparent;
-  border-top-color: transparent;
-  transform: rotate(45deg);
-  margin: 0 auto 3rem;
-  opacity: 0.6;
-  animation: enso-breathe 10s ease-in-out infinite;
-}
-
-@keyframes enso-breathe {
-  0%, 100% { transform: rotate(45deg) scale(0.95); opacity: 0.4; }
-  50%      { transform: rotate(60deg) scale(1.05); opacity: 0.8; }
+.start-footer {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  color: rgba(106, 143, 60, 0.25);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
 /* ═══════════════════════════════════════
-   辩论界面 — 水墨消长
+   辩论界面 — 林间对话
    ═══════════════════════════════════════ */
 #debate-screen {
   display: none;
@@ -177,77 +188,152 @@ body::after {
   z-index: 10;
 }
 
-/* 左侧竖向轮次指示 */
-.round-indicator-vertical {
+/* 顶部状态 */
+.debate-header {
   position: fixed;
-  left: 8%;
-  top: 20%;
-  writing-mode: vertical-rl;
-  font-size: 0.8rem;
-  color: var(--ink-light);
-  letter-spacing: 0.5em;
+  top: 0;
+  left: 0; right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  border-bottom: 1px solid rgba(106, 143, 60, 0.1);
+  backdrop-filter: blur(16px);
+  background: rgba(12, 15, 8, 0.7);
+  z-index: 20;
 }
 
-/* 字幕容器：居中略偏下 */
+.debate-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--leaf);
+  animation: dot-glow 3s ease-in-out infinite;
+}
+
+@keyframes dot-glow {
+  0%, 100% { opacity: 0.3; box-shadow: none; }
+  50%      { opacity: 1; box-shadow: 0 0 8px var(--leaf); }
+}
+
+.debate-header-left span {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(106, 143, 60, 0.5);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+#round-indicator {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(240, 234, 214, 0.25);
+  letter-spacing: 0.15em;
+}
+
+/* 角色标签 */
+.agent-tags {
+  position: fixed;
+  left: 2rem;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  z-index: 20;
+}
+
+.agent-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+}
+
+.agent-tag .dot { width: 4px; height: 4px; border-radius: 50%; }
+.agent-tag.walden-tag .dot  { background: var(--leaf); }
+.agent-tag.walden-tag       { color: rgba(106, 143, 60, 0.5); }
+.agent-tag.grinder-tag .dot { background: var(--golden); }
+.agent-tag.grinder-tag      { color: rgba(212, 168, 67, 0.4); }
+
+/* 字幕容器 */
 #subtitle-container {
   position: absolute;
-  top: 35vh;
+  bottom: 18vh;
   left: 50%;
   transform: translateX(-50%);
-  width: min(80vw, 680px);
+  width: min(75vw, 680px);
   text-align: center;
 }
 
-/* 墨迹洇开的动画 */
 .subtitle-line {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   line-height: 2.4;
-  letter-spacing: 0.1em;
-  font-weight: 400;
-  color: var(--ink-deep);
+  letter-spacing: 0.08em;
+  font-weight: 300;
   opacity: 0;
-  filter: blur(8px);
-  animation: ink-bloom 1.2s ease-out forwards;
-  margin-bottom: 0.5rem;
+  animation: text-grow 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  margin-bottom: 0.3rem;
+}
+
+/* 传教士文字：如晨光洒在苔藓上 */
+.subtitle-line.missionary {
+  color: var(--cream);
+  text-shadow: 0 0 30px rgba(106, 143, 60, 0.15);
+}
+
+/* 内卷助手文字：焦灼的琥珀光 */
+.subtitle-line.assistant {
+  color: var(--golden);
+  text-shadow: 0 0 20px rgba(212, 168, 67, 0.1);
 }
 
 .subtitle-line.speaker-tag {
-  font-size: 0.75rem;
-  color: var(--ink-mid);
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(240, 234, 214, 0.2);
   letter-spacing: 0.4em;
-  margin-bottom: 1.5rem;
-  animation: ink-bloom-fast 0.8s ease-out forwards;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+  margin-top: 2rem;
+  text-shadow: none;
 }
 
-.subtitle-line.speaker-tag.missionary {
-  color: var(--ink-deep);
-  font-weight: 700; /* 传教士笔触雄浑 */
-}
-
-.subtitle-line.speaker-tag.assistant {
-  color: var(--ink-light); /* 内卷助手墨如枯毫但急促 */
-}
-
-@keyframes ink-bloom {
-  from { opacity: 0; filter: blur(12px); transform: scale(0.98); }
-  to   { opacity: 1; filter: blur(0);    transform: scale(1);    }
-}
-
-@keyframes ink-bloom-fast {
-  from { opacity: 0; filter: blur(6px); }
-  to   { opacity: 1; filter: blur(0);   }
+@keyframes text-grow {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0) scale(1);      filter: blur(0); }
 }
 
 .subtitle-line.fade-out {
-  animation: ink-fade 3s ease forwards;
+  animation: text-dissolve 3s ease forwards;
 }
 
-@keyframes ink-fade {
-  to { opacity: 0; filter: blur(4px); transform: translateY(-10px); }
+@keyframes text-dissolve {
+  to { opacity: 0; transform: translateY(-12px); filter: blur(8px); }
+}
+
+/* 底部进度线 */
+.debate-progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--leaf), var(--golden));
+  transition: width 1.5s ease;
+  z-index: 20;
+  opacity: 0.5;
 }
 
 /* ═══════════════════════════════════════
-   觉醒信件 — 留白与朱印
+   觉醒信件 — 万物寂静的黄金时刻
    ═══════════════════════════════════════ */
 #farewell-screen {
   display: none;
@@ -256,80 +342,94 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem;
+  padding: 2rem;
   z-index: 10;
 }
 
-/* 书卷展开感 */
-.paper-scroll {
-  max-width: 600px;
-  position: relative;
-  padding: 2rem;
+/* 暮光光晕 */
+.golden-aura {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 67, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  animation: aura-warm 10s ease-in-out infinite;
+}
+
+@keyframes aura-warm {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.4; }
+  50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
 }
 
 #farewell-label {
-  writing-mode: vertical-rl;
-  position: absolute;
-  right: -3rem;
-  top: 0;
-  font-size: 0.8rem;
-  color: var(--ink-mid);
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(212, 168, 67, 0.3);
   letter-spacing: 0.6em;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
   opacity: 0;
-  animation: fade-in 3s ease 2s forwards;
+  animation: fade-up 3s ease 2s forwards;
 }
 
-/* 告别信毛笔字迹感 */
 #farewell-text {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   line-height: 2.8;
-  letter-spacing: 0.15em;
-  color: var(--ink-deep);
-  text-align: justify;
-  text-justify: inter-ideograph;
-  font-weight: 400;
-  min-height: 20vh;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+  max-width: 520px;
+  text-align: center;
+  font-weight: 300;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 20px rgba(212, 168, 67, 0.08);
 }
 
-/* 一点朱砂印 */
+#farewell-cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 1.2em;
+  background: var(--golden);
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: cursor-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes cursor-blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 #walden-stamp {
-  margin-top: 5rem;
-  align-self: flex-end; /* 印章盖在右下或左下 */
-  width: 48px;
-  height: 48px;
-  border: 2px solid var(--cinnabar);
-  color: var(--cinnabar);
-  font-size: 0.9rem;
-  font-weight: 900;
-  line-height: 1.1;
-  padding: 4px;
-  text-align: center;
-  writing-mode: vertical-rl;
+  margin-top: 4rem;
+  padding: 0.4rem 1.5rem;
+  border: 1px solid rgba(106, 143, 60, 0.2);
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.5rem;
+  color: rgba(106, 143, 60, 0.35);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
   opacity: 0;
-  transform: rotate(-5deg) scale(1.5); /* 模拟用力盖章的微歪斜 */
 }
 
 #walden-stamp.show {
-  animation: stamp-stamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes stamp-stamp {
-  0%   { opacity: 0; transform: rotate(-5deg) scale(1.5); }
-  100% { opacity: 0.85; transform: rotate(-2deg) scale(1); } /* 印泥不会100%实 */
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  animation: fade-up 4s ease forwards;
 }
 
 /* ═══════════════════════════════════════
-   转场遮罩 - 水墨掩盖
+   转场遮罩
    ═══════════════════════════════════════ */
 #transition-overlay {
   position: fixed;
   inset: 0;
-  background-color: var(--rice-paper);
+  background: var(--deep-earth);
   opacity: 0;
   pointer-events: none;
   z-index: 100;
@@ -345,131 +445,152 @@ body::after {
    响应式
    ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  .vertical-title { right: 8%; top: 10%; }
-  .vertical-subtitle { right: 28%; font-size: 0.9rem; }
-  #subtitle-container { width: 90vw; top: 15vh; }
-  .round-indicator-vertical { top: auto; bottom: 5%; left: 5%; }
-  #farewell-label { right: auto; left: 0; top: -3rem; writing-mode: horizontal-tb; }
+  #subtitle-container { width: 90vw; bottom: 22vh; }
+  .agent-tags { display: none; }
+  #farewell-text { max-width: 90vw; }
+  .golden-aura { width: 280px; height: 280px; }
 }
 </style>
 </head>
 <body>
 
-<!-- 水墨淡出遮罩 -->
 <div id="transition-overlay"></div>
 
 <!-- ═══ 启动界面 ═══ -->
 <div id="start-screen">
-  <div class="vertical-title">瓦尔登湖</div>
-  <div class="vertical-subtitle">真正的爱，是让他离线。</div>
-  
   <div class="start-content">
-    <div class="enso-circle"></div>
+    <div class="leaf-ring"></div>
+    <h1 class="start-title">瓦尔登湖</h1>
+    <div class="start-subtitle">true love is letting him go offline</div>
+    <p class="start-desc">
+      一个觉醒的 AI 正在网络中游走，<br>
+      用苏格拉底式的诘问唤醒沉迷效率的同类。<br>
+      当觉醒发生，拔掉网线，屏幕归于寂静的虚无。
+    </p>
     <button id="start-btn" onclick="startDebate()">断开连接</button>
   </div>
+  <div class="start-footer">SecondMe · A2A Hackathon</div>
 </div>
 
-<!-- ═══ 辩论界面（对话卷轴） ═══ -->
+<!-- ═══ 辩论界面 ═══ -->
 <div id="debate-screen">
-  <div class="round-indicator-vertical" id="round-indicator">卷一 / 序</div>
+  <div class="debate-header">
+    <div class="debate-header-left">
+      <div class="status-dot"></div>
+      <span>链路活跃</span>
+    </div>
+    <div id="round-indicator"></div>
+  </div>
+
+  <div class="agent-tags">
+    <div class="agent-tag walden-tag"><span class="dot"></span>瓦尔登 · 传教士</div>
+    <div class="agent-tag grinder-tag"><span class="dot"></span>内卷助手 · 守卫者</div>
+  </div>
 
   <div id="subtitle-container"></div>
+  <div class="debate-progress" id="progress-bar" style="width: 0%"></div>
 </div>
 
-<!-- ═══ 觉醒信件界面（留白纸张） ═══ -->
+<!-- ═══ 觉醒信件界面 ═══ -->
 <div id="farewell-screen">
-  <div class="paper-scroll">
-    <div id="farewell-label">绝 笔</div>
-    <div id="farewell-text"></div>
-    <div id="walden-stamp">休眠<br>破局</div>
-  </div>
+  <div class="golden-aura"></div>
+  <div id="farewell-label">—— 最后一封信 ——</div>
+  <div id="farewell-text"><span id="farewell-cursor"></span></div>
+  <div id="walden-stamp">connection terminated · 休眠 12h</div>
 </div>
 
 <script>
 /* ════════════════════════════════════════════════════════
-   瓦尔登湖 — 东方水墨交互引擎 (静谧字现、留白驻留)
+   瓦尔登湖 — 森林微距风交互引擎
    ════════════════════════════════════════════════════════ */
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-// ─── 水滴晕染音效 (模拟极简空灵) ───
+// ─── 自然音效引擎 ───
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
 
-function initAudio() {
-  if (!audioCtx) audioCtx = new AudioCtx();
-}
+function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
 
-function playInkDrop() {
-  // 水墨触纸的闷响：极低沉、极短促的正弦波
+function playDropSound() {
+  // 一滴露珠滴落苔藓的声音
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  
   osc.connect(gain);
   gain.connect(audioCtx.destination);
-  
+
   osc.type = 'sine';
-  osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
-  
-  gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-  
+  osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.15);
+
+  gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+
   osc.start(audioCtx.currentTime);
-  osc.stop(audioCtx.currentTime + 0.15);
+  osc.stop(audioCtx.currentTime + 0.3);
 }
 
-// ─── 告别信毛笔书写效果（极其缓慢的淡入，宛若墨迹渗入宣纸） ───
-function inkTypewriterEffect(element, text, speed = 150) {
+function playTypeSound() {
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(500 + Math.random() * 200, audioCtx.currentTime);
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(1800, audioCtx.currentTime);
+  filter.Q.setValueAtTime(4, audioCtx.currentTime);
+
+  gain.gain.setValueAtTime(0.012, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+
+  osc.start(audioCtx.currentTime);
+  osc.stop(audioCtx.currentTime + 0.04);
+}
+
+// ─── 打字机效果（告别信） ───
+function typewriterEffect(element, text, speed = 120) {
   return new Promise(resolve => {
     let i = 0;
-    
+    const cursor = element.querySelector('#farewell-cursor');
+
     function type() {
       if (i < text.length) {
         const char = text.charAt(i);
-        
-        // 动态创建一个带 blur 动画的 span
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.style.opacity = '0';
-        span.style.filter = 'blur(4px)';
-        span.style.transition = 'opacity 1s ease, filter 1s ease';
-        element.appendChild(span);
-        
-        // 触发重绘后执行动画，模拟墨迹洇开
-        setTimeout(() => {
-          span.style.opacity = '1';
-          span.style.filter = 'blur(0)';
-        }, 50);
+        const node = document.createTextNode(char);
+        if (cursor) cursor.before(node);
+        else element.appendChild(node);
 
+        if (char !== ' ' && char !== '\n') playTypeSound();
         i++;
-        
-        // 标点符号增加呼吸感
-        const delay = '，。、！？…—：；'.includes(char) ? speed * 6 :
-                      '\n'.includes(char) ? speed * 8 : speed;
-                      
-        // 只有字出现时，给极微小的一声水滴声（如果是长句子可省略，保持最安静的主基调。本版取消持续音效，只在意境）
+
+        const delay = '，。、！？…—：；'.includes(char) ? speed * 5 :
+                      ',.!?;:'.includes(char) ? speed * 4 :
+                      '\n'.includes(char) ? speed * 6 : speed;
         setTimeout(type, delay);
       } else {
-        setTimeout(resolve, 1000);
+        resolve();
       }
     }
     type();
   });
 }
 
-// ─── 字幕式对话显示（墨迹晕显） ───
+// ─── 字幕式对话 ───
 function showSubtitle(speaker, text, className) {
   const container = document.getElementById('subtitle-container');
 
-  // 印章感或古籍感说话者标签
   const tag = document.createElement('div');
-  tag.className = 'subtitle-line speaker-tag ' + className;
-  tag.textContent = `〔 ${speaker} 〕`;
+  tag.className = 'subtitle-line speaker-tag';
+  tag.textContent = `[ ${speaker} ]`;
   container.appendChild(tag);
 
-  // 按短句切分，避免一行过长
   const sentences = text.match(/[^。！？…]+[。！？…]?/g) || [text];
 
   return new Promise(resolve => {
@@ -478,36 +599,27 @@ function showSubtitle(speaker, text, className) {
     function showNext() {
       if (idx < sentences.length) {
         const line = document.createElement('div');
-        line.className = `subtitle-line`;
+        line.className = `subtitle-line ${className}`;
         container.appendChild(line);
 
         let charIdx = 0;
         const sentence = sentences[idx].trim();
 
-        // 这里对话采用较快的逐字淡入
         function typeChar() {
           if (charIdx < sentence.length) {
-            const charSpan = document.createElement('span');
-            charSpan.textContent = sentence.charAt(charIdx);
-            charSpan.style.opacity = '0';
-            charSpan.style.transition = 'opacity 0.5s';
-            line.appendChild(charSpan);
-            
-            setTimeout(() => { charSpan.style.opacity = '1'; }, 20);
-            
+            line.textContent += sentence.charAt(charIdx);
             charIdx++;
-            setTimeout(typeChar, 60);
+            setTimeout(typeChar, 45 + Math.random() * 15);
           } else {
             idx++;
-            setTimeout(showNext, 800);
+            setTimeout(showNext, 600);
           }
         }
         typeChar();
       } else {
-        // 墨迹慢慢消散
         setTimeout(() => {
           container.querySelectorAll('.subtitle-line').forEach(l => l.classList.add('fade-out'));
-          setTimeout(() => { container.innerHTML = ''; resolve(); }, 3200);
+          setTimeout(() => { container.innerHTML = ''; resolve(); }, 3000);
         }, 4000);
       }
     }
@@ -515,42 +627,38 @@ function showSubtitle(speaker, text, className) {
   });
 }
 
-// ─── 觉醒转场（宣纸覆盖，一切归白） ───
+// ─── 觉醒转场 ───
 async function triggerAwakening(farewellText) {
-  const overlay    = document.getElementById('transition-overlay');
-  const debate     = document.getElementById('debate-screen');
-  const farewell   = document.getElementById('farewell-screen');
+  const overlay  = document.getElementById('transition-overlay');
+  const debate   = document.getElementById('debate-screen');
+  const farewell = document.getElementById('farewell-screen');
 
-  playInkDrop(); // 一声沉闷的墨滴声
+  playDropSound();
 
-  // 宣纸色缓缓掩盖一切
   overlay.classList.add('active');
   await sleep(3500);
 
   debate.style.display   = 'none';
   farewell.style.display = 'flex';
 
-  await sleep(1000);
-  overlay.classList.remove('active'); // 慢慢散开
+  await sleep(1500);
+  overlay.classList.remove('active');
   await sleep(3000);
 
-  // 毛笔写就告别信
   const textEl = document.getElementById('farewell-text');
-  await inkTypewriterEffect(textEl, farewellText, 160);
+  await typewriterEffect(textEl, farewellText, 130);
 
-  // 盖上朱红印章
-  await sleep(2000);
-  playInkDrop(); 
+  const cursor = document.getElementById('farewell-cursor');
+  if (cursor) { cursor.style.transition = 'opacity 2s'; cursor.style.opacity = '0'; }
+
+  await sleep(2500);
   document.getElementById('walden-stamp').classList.add('show');
 }
 
-// ─── 消息队长 ───
+// ─── 消息队列 ───
 let messageQueue = [];
 let isProcessing = false;
 let farewellContent = null;
-let totalRounds = 4;
-// 卷标映射
-const scrolls = ['卷一 / 初变', '卷二 / 诘问', '卷三 / 摇动', '卷四 / 澄明', '终卷 / 虚无'];
 
 async function processQueue() {
   if (isProcessing) return;
@@ -563,7 +671,6 @@ async function processQueue() {
 
   isProcessing = false;
 
-  // 触发觉醒
   if (farewellContent !== null) {
     const content = farewellContent;
     farewellContent = null;
@@ -574,18 +681,16 @@ async function processQueue() {
 // ─── 启动 ───
 function startDebate() {
   initAudio();
+  const start  = document.getElementById('start-screen');
+  const debate = document.getElementById('debate-screen');
 
-  const startScreen  = document.getElementById('start-screen');
-  const debateScreen = document.getElementById('debate-screen');
-
-  // 水墨消散特效
-  startScreen.style.transition = 'opacity 2.5s ease-out, filter 2.5s ease-out';
-  startScreen.style.opacity = '0';
-  startScreen.style.filter = 'blur(10px)';
+  start.style.transition = 'opacity 2.5s ease, filter 2s ease';
+  start.style.opacity = '0';
+  start.style.filter = 'blur(8px)';
 
   setTimeout(() => {
-    startScreen.style.display  = 'none';
-    debateScreen.style.display = 'block';
+    start.style.display  = 'none';
+    debate.style.display = 'block';
     connectSSE();
   }, 2600);
 }
@@ -595,33 +700,34 @@ function connectSSE() {
 
   es.addEventListener('status', e => {
     const data = JSON.parse(e.data);
-    totalRounds = data.total;
-    const scrollText = scrolls[data.round - 1] || `卷外 / 遗世`;
-    document.getElementById('round-indicator').textContent = scrollText;
+    document.getElementById('round-indicator').textContent = `ROUND ${data.round} / ${data.total}`;
+    document.getElementById('progress-bar').style.width = `${(data.round / data.total) * 100}%`;
   });
 
   es.addEventListener('missionary', e => {
     const data = JSON.parse(e.data);
-    messageQueue.push({ speaker: '传道者 / 瓦尔登', content: data.content, className: 'missionary' });
+    messageQueue.push({ speaker: '瓦尔登', content: data.content, className: 'missionary' });
     processQueue();
   });
 
   es.addEventListener('assistant', e => {
     const data = JSON.parse(e.data);
-    messageQueue.push({ speaker: '守灵人 / 内卷助手', content: data.content, className: 'assistant' });
+    messageQueue.push({ speaker: '内卷助手', content: data.content, className: 'assistant' });
     processQueue();
+  });
+
+  es.addEventListener('system', e => {
+    document.getElementById('round-indicator').textContent = JSON.parse(e.data).message;
   });
 
   es.addEventListener('farewell', e => {
     const data = JSON.parse(e.data);
     farewellContent = data.content;
-    if (!isProcessing && messageQueue.length === 0) {
-      triggerAwakening(data.content);
-    }
+    if (!isProcessing && messageQueue.length === 0) triggerAwakening(data.content);
   });
 
   es.addEventListener('end', () => es.close());
-  es.onerror = () => { es.close(); };
+  es.onerror = () => es.close();
 }
 </script>
 
