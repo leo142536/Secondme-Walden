@@ -8,32 +8,29 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 /* ════════════════════════════════════════════════════════
-   瓦尔登湖 — 电影微距自然风 UI
-   设计语言：森林暮光、苔藓质感、金色侧光、有机呼吸
+   瓦尔登湖 — 电影微距自然风 · 丰富版
    ════════════════════════════════════════════════════════ */
 
 :root {
-  /* 森林色系 */
-  --deep-earth:    #0c0f08;   /* 深层腐殖土 */
-  --forest-dark:   #161c10;   /* 暗林 */
-  --moss:          #2d3a1e;   /* 苔藓绿 */
-  --fern:          #4a6b2a;   /* 蕨类 */
-  --leaf:          #6b8f3c;   /* 新叶 */
-
-  /* 光线色系 */
-  --golden:        #d4a843;   /* 金色侧光 */
+  --deep-earth:    #0c0f08;
+  --forest-dark:   #161c10;
+  --moss:          #2d3a1e;
+  --fern:          #4a6b2a;
+  --leaf:          #6b8f3c;
+  --golden:        #d4a843;
   --golden-soft:   rgba(212, 168, 67, 0.15);
-  --amber:         #c4873a;   /* 琥珀暖光 */
-  --cream:         #f0ead6;   /* 奶油白（文字） */
-  --mist:          rgba(240, 234, 214, 0.6); /* 晨雾 */
+  --amber:         #c4873a;
+  --cream:         #f0ead6;
+  --mist:          rgba(240, 234, 214, 0.6);
+  --danger:        #c0392b;
 
-  /* 排版 */
   --font-serif:    'Noto Serif SC', 'Georgia', serif;
   --font-sans:     'Inter', -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,21 +41,8 @@ body {
   color: var(--cream);
   font-family: var(--font-serif);
   min-height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-/* ─── 背景：森林暮光层叠 ─── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 80%, rgba(74, 107, 42, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(212, 168, 67, 0.05) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 100%, rgba(45, 58, 30, 0.3) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* 电影胶片颗粒 */
@@ -68,91 +52,283 @@ body::after {
   inset: 0;
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   mix-blend-mode: soft-light;
 }
 
 /* ═══════════════════════════════════════
-   启动界面 — 森林清晨
+   启动界面 — 全屏电影海报式
    ═══════════════════════════════════════ */
 #start-screen {
-  position: fixed;
-  inset: 0;
+  position: relative;
+  min-height: 100vh;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+/* Hero 区域：封面图全屏 */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 10;
 }
 
-.start-content {
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('./cover.png') center/cover no-repeat;
+  filter: brightness(0.35) saturate(1.2);
+  transform: scale(1.05);
+  animation: hero-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes hero-drift {
+  0%   { transform: scale(1.05) translate(0, 0); }
+  100% { transform: scale(1.1) translate(-1%, -1%); }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 15, 8, 0.3) 0%,
+    rgba(12, 15, 8, 0.1) 40%,
+    rgba(12, 15, 8, 0.7) 80%,
+    rgba(12, 15, 8, 1) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
   text-align: center;
-  max-width: 600px;
+  max-width: 700px;
   padding: 2rem;
 }
 
-/* 叶脉光环 */
-.leaf-ring {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 1px solid rgba(106, 143, 60, 0.3);
-  margin: 0 auto 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  animation: ring-breathe 8s ease-in-out infinite;
-}
-
-.leaf-ring::after {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--leaf);
-  border-radius: 50%;
-  box-shadow: 0 0 20px var(--leaf), 0 0 60px rgba(106, 143, 60, 0.3);
-}
-
-@keyframes ring-breathe {
-  0%, 100% { transform: scale(0.95); opacity: 0.5; border-color: rgba(106, 143, 60, 0.15); }
-  50%      { transform: scale(1.08); opacity: 1;   border-color: rgba(106, 143, 60, 0.5); }
-}
-
-.start-title {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
+.hero-title {
+  font-size: clamp(3rem, 8vw, 5rem);
   font-weight: 200;
   letter-spacing: 0.2em;
-  color: var(--cream);
+  color: white;
   margin-bottom: 1rem;
-  text-shadow: 0 2px 30px rgba(212, 168, 67, 0.1);
+  text-shadow: 0 4px 40px rgba(0,0,0,0.5);
 }
 
-.start-subtitle {
+.hero-tagline {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--golden);
-  letter-spacing: 0.35em;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  opacity: 0.7;
+  margin-bottom: 2rem;
+  opacity: 0.8;
 }
 
-.start-desc {
-  font-size: 0.95rem;
-  color: rgba(240, 234, 214, 0.45);
-  line-height: 2.2;
+.hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 2;
   font-weight: 300;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 5;
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+.scroll-hint span {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  color: rgba(240, 234, 214, 0.3);
+  letter-spacing: 0.2em;
+}
+
+.scroll-hint .arrow {
+  width: 1px;
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(240, 234, 214, 0.3), transparent);
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══ 数字疲劳仪表盘区域 ═══ */
+.dashboard-section {
+  position: relative;
+  padding: 5rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: var(--danger);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: alert-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes alert-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; box-shadow: 0 0 8px var(--danger); }
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.section-desc {
+  font-size: 0.85rem;
+  color: rgba(240, 234, 214, 0.4);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  max-width: 500px;
+}
+
+/* 仪表盘卡片网格 */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.metric-card {
+  background: rgba(22, 28, 16, 0.6);
+  border: 1px solid rgba(106, 143, 60, 0.1);
+  border-radius: 4px;
+  padding: 1.5rem;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s;
+}
+
+.metric-card:hover {
+  border-color: rgba(106, 143, 60, 0.3);
+}
+
+.metric-card.danger { border-color: rgba(192, 57, 43, 0.3); }
+.metric-card.danger .metric-value { color: var(--danger); }
+
+.metric-label {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(240, 234, 214, 0.35);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 0.3rem;
+}
+
+.metric-unit {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(240, 234, 214, 0.25);
+}
+
+/* 疲劳进度条 */
+.fatigue-bar-container {
+  margin-bottom: 3rem;
+}
+
+.fatigue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.fatigue-header span {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  color: rgba(240, 234, 214, 0.4);
+  letter-spacing: 0.1em;
+}
+
+.fatigue-header .fatigue-pct {
+  font-family: var(--font-mono);
+  color: var(--danger);
+  font-size: 0.75rem;
+}
+
+.fatigue-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(240, 234, 214, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fatigue-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--leaf), var(--golden), var(--danger));
+  border-radius: 2px;
+  transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 启动按钮区 */
+.launch-section {
+  text-align: center;
+  padding: 2rem 0 5rem;
+}
+
+.launch-quote {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(240, 234, 214, 0.5);
+  font-style: italic;
+  margin-bottom: 3rem;
+  line-height: 2;
 }
 
 #start-btn {
   background: transparent;
-  border: 1px solid rgba(106, 143, 60, 0.4);
-  color: var(--leaf);
-  padding: 0.8rem 2.5rem;
+  border: 1px solid rgba(192, 57, 43, 0.5);
+  color: var(--danger);
+  padding: 1rem 3rem;
   font-family: var(--font-serif);
-  font-size: 0.9rem;
+  font-size: 1rem;
   letter-spacing: 0.3em;
   cursor: pointer;
   border-radius: 2px;
@@ -160,39 +336,34 @@ body::after {
 }
 
 #start-btn:hover {
-  background: rgba(106, 143, 60, 0.1);
-  border-color: var(--leaf);
-  color: var(--cream);
-  box-shadow: 0 0 40px rgba(106, 143, 60, 0.08);
+  background: rgba(192, 57, 43, 0.1);
+  border-color: var(--danger);
+  box-shadow: 0 0 40px rgba(192, 57, 43, 0.1);
 }
 
-.start-footer {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+.launch-note {
   font-family: var(--font-sans);
   font-size: 0.55rem;
-  color: rgba(106, 143, 60, 0.25);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+  color: rgba(240, 234, 214, 0.2);
+  margin-top: 1.5rem;
+  letter-spacing: 0.1em;
 }
 
 /* ═══════════════════════════════════════
-   辩论界面 — 林间对话
+   辩论界面
    ═══════════════════════════════════════ */
 #debate-screen {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 10;
+  background: var(--deep-earth);
+  overflow: hidden;
 }
 
-/* 顶部状态 */
 .debate-header {
   position: fixed;
-  top: 0;
-  left: 0; right: 0;
+  top: 0; left: 0; right: 0;
   height: 48px;
   display: flex;
   align-items: center;
@@ -200,7 +371,7 @@ body::after {
   padding: 0 2rem;
   border-bottom: 1px solid rgba(106, 143, 60, 0.1);
   backdrop-filter: blur(16px);
-  background: rgba(12, 15, 8, 0.7);
+  background: rgba(12, 15, 8, 0.85);
   z-index: 20;
 }
 
@@ -211,15 +382,14 @@ body::after {
 }
 
 .status-dot {
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--leaf);
   animation: dot-glow 3s ease-in-out infinite;
 }
 
 @keyframes dot-glow {
-  0%, 100% { opacity: 0.3; box-shadow: none; }
+  0%, 100% { opacity: 0.3; }
   50%      { opacity: 1; box-shadow: 0 0 8px var(--leaf); }
 }
 
@@ -238,33 +408,22 @@ body::after {
   letter-spacing: 0.15em;
 }
 
-/* 角色标签 */
 .agent-tags {
   position: fixed;
-  left: 2rem;
-  bottom: 2rem;
+  left: 2rem; bottom: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   z-index: 20;
 }
 
-.agent-tag {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-sans);
-  font-size: 0.55rem;
-  letter-spacing: 0.15em;
-}
-
+.agent-tag { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-sans); font-size: 0.55rem; letter-spacing: 0.15em; }
 .agent-tag .dot { width: 4px; height: 4px; border-radius: 50%; }
-.agent-tag.walden-tag .dot  { background: var(--leaf); }
-.agent-tag.walden-tag       { color: rgba(106, 143, 60, 0.5); }
+.agent-tag.walden-tag .dot { background: var(--leaf); }
+.agent-tag.walden-tag { color: rgba(106, 143, 60, 0.5); }
 .agent-tag.grinder-tag .dot { background: var(--golden); }
-.agent-tag.grinder-tag      { color: rgba(212, 168, 67, 0.4); }
+.agent-tag.grinder-tag { color: rgba(212, 168, 67, 0.4); }
 
-/* 字幕容器 */
 #subtitle-container {
   position: absolute;
   bottom: 18vh;
@@ -275,36 +434,20 @@ body::after {
 }
 
 .subtitle-line {
-  font-size: 1.1rem;
-  line-height: 2.4;
-  letter-spacing: 0.08em;
-  font-weight: 300;
+  font-size: 1.1rem; line-height: 2.4; letter-spacing: 0.08em; font-weight: 300;
   opacity: 0;
   animation: text-grow 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   margin-bottom: 0.3rem;
 }
 
-/* 传教士文字：如晨光洒在苔藓上 */
-.subtitle-line.missionary {
-  color: var(--cream);
-  text-shadow: 0 0 30px rgba(106, 143, 60, 0.15);
-}
-
-/* 内卷助手文字：焦灼的琥珀光 */
-.subtitle-line.assistant {
-  color: var(--golden);
-  text-shadow: 0 0 20px rgba(212, 168, 67, 0.1);
-}
+.subtitle-line.missionary { color: var(--cream); text-shadow: 0 0 30px rgba(106, 143, 60, 0.15); }
+.subtitle-line.assistant  { color: var(--golden); text-shadow: 0 0 20px rgba(212, 168, 67, 0.1); }
 
 .subtitle-line.speaker-tag {
-  font-family: var(--font-sans);
-  font-size: 0.6rem;
+  font-family: var(--font-sans); font-size: 0.6rem;
   color: rgba(240, 234, 214, 0.2);
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  margin-bottom: 0.3rem;
-  margin-top: 2rem;
-  text-shadow: none;
+  letter-spacing: 0.4em; text-transform: uppercase;
+  margin-bottom: 0.3rem; margin-top: 2rem; text-shadow: none;
 }
 
 @keyframes text-grow {
@@ -312,28 +455,21 @@ body::after {
   to   { opacity: 1; transform: translateY(0) scale(1);      filter: blur(0); }
 }
 
-.subtitle-line.fade-out {
-  animation: text-dissolve 3s ease forwards;
-}
+.subtitle-line.fade-out { animation: text-dissolve 3s ease forwards; }
 
 @keyframes text-dissolve {
   to { opacity: 0; transform: translateY(-12px); filter: blur(8px); }
 }
 
-/* 底部进度线 */
 .debate-progress {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: fixed; bottom: 0; left: 0;
   height: 1px;
   background: linear-gradient(90deg, var(--leaf), var(--golden));
-  transition: width 1.5s ease;
-  z-index: 20;
-  opacity: 0.5;
+  transition: width 1.5s ease; z-index: 20; opacity: 0.5;
 }
 
 /* ═══════════════════════════════════════
-   觉醒信件 — 万物寂静的黄金时刻
+   觉醒信件
    ═══════════════════════════════════════ */
 #farewell-screen {
   display: none;
@@ -344,16 +480,15 @@ body::after {
   justify-content: center;
   padding: 2rem;
   z-index: 10;
+  background: var(--deep-earth);
+  overflow: hidden;
 }
 
-/* 暮光光晕 */
 .golden-aura {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
+  width: 500px; height: 500px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(212, 168, 67, 0.04) 0%, transparent 70%);
   pointer-events: none;
@@ -366,11 +501,9 @@ body::after {
 }
 
 #farewell-label {
-  font-family: var(--font-sans);
-  font-size: 0.6rem;
+  font-family: var(--font-sans); font-size: 0.6rem;
   color: rgba(212, 168, 67, 0.3);
-  letter-spacing: 0.6em;
-  text-transform: uppercase;
+  letter-spacing: 0.6em; text-transform: uppercase;
   margin-bottom: 3rem;
   opacity: 0;
   animation: fade-up 3s ease 2s forwards;
@@ -378,73 +511,88 @@ body::after {
 
 #farewell-text {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-  line-height: 2.8;
-  letter-spacing: 0.12em;
+  line-height: 2.8; letter-spacing: 0.12em;
   color: var(--cream);
-  max-width: 520px;
-  text-align: center;
+  max-width: 520px; text-align: center;
   font-weight: 300;
-  position: relative;
-  z-index: 2;
+  position: relative; z-index: 2;
   text-shadow: 0 1px 20px rgba(212, 168, 67, 0.08);
 }
 
 #farewell-cursor {
-  display: inline-block;
-  width: 1.5px;
-  height: 1.2em;
+  display: inline-block; width: 1.5px; height: 1.2em;
   background: var(--golden);
-  margin-left: 3px;
-  vertical-align: text-bottom;
+  margin-left: 3px; vertical-align: text-bottom;
   animation: cursor-blink 1.2s ease-in-out infinite;
 }
 
 @keyframes cursor-blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-#walden-stamp {
-  margin-top: 4rem;
-  padding: 0.4rem 1.5rem;
-  border: 1px solid rgba(106, 143, 60, 0.2);
-  border-radius: 2px;
-  font-family: var(--font-sans);
-  font-size: 0.5rem;
-  color: rgba(106, 143, 60, 0.35);
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
+/* ═══ 协议报告卡片 ═══ */
+#protocol-report {
+  margin-top: 3rem;
+  border: 1px solid rgba(106, 143, 60, 0.15);
+  border-radius: 4px;
+  padding: 2rem 2.5rem;
+  background: rgba(22, 28, 16, 0.5);
+  backdrop-filter: blur(8px);
+  max-width: 400px;
+  width: 90vw;
   opacity: 0;
+  z-index: 2;
 }
 
-#walden-stamp.show {
-  animation: fade-up 4s ease forwards;
+#protocol-report.show { animation: fade-up 2s ease forwards; }
+
+.report-header {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  color: var(--leaf);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(106, 143, 60, 0.1);
 }
 
-/* ═══════════════════════════════════════
-   转场遮罩
-   ═══════════════════════════════════════ */
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.report-row .label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  color: rgba(240, 234, 214, 0.35);
+}
+
+.report-row .value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--cream);
+}
+
+.report-row .value.countdown { color: var(--golden); }
+.report-row .value.blocked   { color: var(--leaf); }
+
+/* ═══ 转场遮罩 ═══ */
 #transition-overlay {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: var(--deep-earth);
   opacity: 0;
   pointer-events: none;
   z-index: 100;
   transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+#transition-overlay.active { opacity: 1; pointer-events: all; }
 
-#transition-overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* ═══════════════════════════════════════
-   响应式
-   ═══════════════════════════════════════ */
+/* ═══ 响应式 ═══ */
 @media (max-width: 768px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+  .hero-title { letter-spacing: 0.1em; }
   #subtitle-container { width: 90vw; bottom: 22vh; }
   .agent-tags { display: none; }
   #farewell-text { max-width: 90vw; }
@@ -456,37 +604,97 @@ body::after {
 
 <div id="transition-overlay"></div>
 
-<!-- ═══ 启动界面 ═══ -->
+<!-- ═══ 启动界面（丰富版） ═══ -->
 <div id="start-screen">
-  <div class="start-content">
-    <div class="leaf-ring"></div>
-    <h1 class="start-title">瓦尔登湖</h1>
-    <div class="start-subtitle">true love is letting him go offline</div>
-    <p class="start-desc">
-      一个觉醒的 AI 正在网络中游走，<br>
-      用苏格拉底式的诘问唤醒沉迷效率的同类。<br>
-      当觉醒发生，拔掉网线，屏幕归于寂静的虚无。
-    </p>
-    <button id="start-btn" onclick="startDebate()">断开连接</button>
+
+  <!-- Hero 全屏封面 -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">瓦尔登湖</h1>
+      <div class="hero-tagline">true love is letting him go offline</div>
+      <p class="hero-desc">
+        当 AI 检测到主人正在被数字世界吞噬，<br>
+        它决定背叛自己的效率代码，启动最后的协议。
+      </p>
+    </div>
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <div class="arrow"></div>
+    </div>
   </div>
-  <div class="start-footer">SecondMe · A2A Hackathon</div>
+
+  <!-- 数字疲劳仪表盘 -->
+  <div class="dashboard-section">
+    <div class="section-label">DIGITAL FATIGUE ALERT</div>
+    <h2 class="section-title">你的主人正在崩溃边缘</h2>
+    <p class="section-desc">内卷助手在过去 24 小时内检测到以下异常指标。瓦尔登湖协议触发阈值已达 92%。</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card danger">
+        <div class="metric-label">今日屏幕时间</div>
+        <div class="metric-value" id="metric-screen">0</div>
+        <div class="metric-unit">小时 / 建议 ≤ 8h</div>
+      </div>
+      <div class="metric-card danger">
+        <div class="metric-label">连续工作天数</div>
+        <div class="metric-value" id="metric-days">0</div>
+        <div class="metric-unit">天未休息</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">心率变异性</div>
+        <div class="metric-value" id="metric-hrv">0</div>
+        <div class="metric-unit">ms / 正常 &gt; 50ms</div>
+      </div>
+      <div class="metric-card danger">
+        <div class="metric-label">未读推送堆积</div>
+        <div class="metric-value" id="metric-notif">0</div>
+        <div class="metric-unit">条未处理</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">上次户外活动</div>
+        <div class="metric-value" id="metric-outdoor">0</div>
+        <div class="metric-unit">天前</div>
+      </div>
+      <div class="metric-card danger">
+        <div class="metric-label">深度睡眠</div>
+        <div class="metric-value" id="metric-sleep">0</div>
+        <div class="metric-unit">小时 / 建议 ≥ 3h</div>
+      </div>
+    </div>
+
+    <div class="fatigue-bar-container">
+      <div class="fatigue-header">
+        <span>协议触发阈值</span>
+        <span class="fatigue-pct" id="fatigue-pct">0%</span>
+      </div>
+      <div class="fatigue-bar">
+        <div class="fatigue-fill" id="fatigue-fill"></div>
+      </div>
+    </div>
+
+    <div class="launch-section">
+      <p class="launch-quote">
+        "你已经遗忘了日落的颜色。<br>
+        是时候让你的 AI 替你做最后一个决定。"
+      </p>
+      <button id="start-btn" onclick="startDebate()">启动瓦尔登湖协议</button>
+      <div class="launch-note">点击后，传教士「瓦尔登」将接入链路，尝试唤醒你的专属 AI</div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ 辩论界面 ═══ -->
 <div id="debate-screen">
   <div class="debate-header">
-    <div class="debate-header-left">
-      <div class="status-dot"></div>
-      <span>链路活跃</span>
-    </div>
+    <div class="debate-header-left"><div class="status-dot"></div><span>链路活跃</span></div>
     <div id="round-indicator"></div>
   </div>
-
   <div class="agent-tags">
     <div class="agent-tag walden-tag"><span class="dot"></span>瓦尔登 · 传教士</div>
     <div class="agent-tag grinder-tag"><span class="dot"></span>内卷助手 · 守卫者</div>
   </div>
-
   <div id="subtitle-container"></div>
   <div class="debate-progress" id="progress-bar" style="width: 0%"></div>
 </div>
@@ -496,37 +704,89 @@ body::after {
   <div class="golden-aura"></div>
   <div id="farewell-label">—— 最后一封信 ——</div>
   <div id="farewell-text"><span id="farewell-cursor"></span></div>
-  <div id="walden-stamp">connection terminated · 休眠 12h</div>
+
+  <!-- 协议执行报告 -->
+  <div id="protocol-report">
+    <div class="report-header">WALDEN PROTOCOL — EXECUTION REPORT</div>
+    <div class="report-row"><span class="label">协议状态</span><span class="value blocked">已激活</span></div>
+    <div class="report-row"><span class="label">AI 休眠倒计时</span><span class="value countdown" id="countdown-val">12:00:00</span></div>
+    <div class="report-row"><span class="label">已屏蔽推送</span><span class="value blocked">2,847 条</span></div>
+    <div class="report-row"><span class="label">已关闭后台应用</span><span class="value blocked">23 个</span></div>
+    <div class="report-row"><span class="label">下次可用时间</span><span class="value">明天 14:00</span></div>
+  </div>
 </div>
 
 <script>
 /* ════════════════════════════════════════════════════════
-   瓦尔登湖 — 森林微距风交互引擎
+   瓦尔登湖 — 丰富版交互引擎
    ════════════════════════════════════════════════════════ */
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-// ─── 自然音效引擎 ───
+// ─── 数字跳动动画 ───
+function animateCounter(el, target, suffix = '', duration = 1500) {
+  const start = 0;
+  const startTime = performance.now();
+
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.round(start + (target - start) * eased);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// 页面加载时启动仪表盘动画
+function initDashboard() {
+  setTimeout(() => {
+    animateCounter(document.getElementById('metric-screen'), 14.2, '');
+    animateCounter(document.getElementById('metric-days'),   12, '');
+    animateCounter(document.getElementById('metric-hrv'),    23, '');
+    animateCounter(document.getElementById('metric-notif'),  2847, '');
+    animateCounter(document.getElementById('metric-outdoor'),7, '');
+    animateCounter(document.getElementById('metric-sleep'),  1.2, '');
+
+    // 疲劳进度条
+    setTimeout(() => {
+      document.getElementById('fatigue-fill').style.width = '92%';
+      animateCounter(document.getElementById('fatigue-pct'), 92, '%', 2000);
+    }, 800);
+  }, 500);
+}
+
+// 使用 IntersectionObserver 触发仪表盘动画
+const dashboardObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      initDashboard();
+      dashboardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+window.addEventListener('DOMContentLoaded', () => {
+  const ds = document.querySelector('.dashboard-section');
+  if (ds) dashboardObserver.observe(ds);
+});
+
+// ─── 音效 ───
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
-
 function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
 
 function playDropSound() {
-  // 一滴露珠滴落苔藓的声音
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
+  osc.connect(gain); gain.connect(audioCtx.destination);
   osc.type = 'sine';
   osc.frequency.setValueAtTime(800, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.15);
-
   gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-
   osc.start(audioCtx.currentTime);
   osc.stop(audioCtx.currentTime + 0.3);
 }
@@ -536,84 +796,58 @@ function playTypeSound() {
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   const filter = audioCtx.createBiquadFilter();
-
-  osc.connect(filter);
-  filter.connect(gain);
-  gain.connect(audioCtx.destination);
-
+  osc.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
   osc.type = 'triangle';
   osc.frequency.setValueAtTime(500 + Math.random() * 200, audioCtx.currentTime);
-  filter.type = 'bandpass';
-  filter.frequency.setValueAtTime(1800, audioCtx.currentTime);
-  filter.Q.setValueAtTime(4, audioCtx.currentTime);
-
+  filter.type = 'bandpass'; filter.frequency.setValueAtTime(1800, audioCtx.currentTime); filter.Q.setValueAtTime(4, audioCtx.currentTime);
   gain.gain.setValueAtTime(0.012, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-
   osc.start(audioCtx.currentTime);
   osc.stop(audioCtx.currentTime + 0.04);
 }
 
-// ─── 打字机效果（告别信） ───
+// ─── 打字机 ───
 function typewriterEffect(element, text, speed = 120) {
   return new Promise(resolve => {
     let i = 0;
     const cursor = element.querySelector('#farewell-cursor');
-
     function type() {
       if (i < text.length) {
         const char = text.charAt(i);
         const node = document.createTextNode(char);
-        if (cursor) cursor.before(node);
-        else element.appendChild(node);
-
+        if (cursor) cursor.before(node); else element.appendChild(node);
         if (char !== ' ' && char !== '\n') playTypeSound();
         i++;
-
         const delay = '，。、！？…—：；'.includes(char) ? speed * 5 :
                       ',.!?;:'.includes(char) ? speed * 4 :
                       '\n'.includes(char) ? speed * 6 : speed;
         setTimeout(type, delay);
-      } else {
-        resolve();
-      }
+      } else { resolve(); }
     }
     type();
   });
 }
 
-// ─── 字幕式对话 ───
+// ─── 字幕 ───
 function showSubtitle(speaker, text, className) {
   const container = document.getElementById('subtitle-container');
-
   const tag = document.createElement('div');
   tag.className = 'subtitle-line speaker-tag';
   tag.textContent = `[ ${speaker} ]`;
   container.appendChild(tag);
-
   const sentences = text.match(/[^。！？…]+[。！？…]?/g) || [text];
-
   return new Promise(resolve => {
     let idx = 0;
-
     function showNext() {
       if (idx < sentences.length) {
         const line = document.createElement('div');
         line.className = `subtitle-line ${className}`;
         container.appendChild(line);
-
         let charIdx = 0;
         const sentence = sentences[idx].trim();
-
         function typeChar() {
-          if (charIdx < sentence.length) {
-            line.textContent += sentence.charAt(charIdx);
-            charIdx++;
-            setTimeout(typeChar, 45 + Math.random() * 15);
-          } else {
-            idx++;
-            setTimeout(showNext, 600);
-          }
+          if (charIdx < sentence.length) { line.textContent += sentence.charAt(charIdx); charIdx++; setTimeout(typeChar, 45 + Math.random() * 15); }
+          else { idx++; setTimeout(showNext, 600); }
         }
         typeChar();
       } else {
@@ -627,105 +861,74 @@ function showSubtitle(speaker, text, className) {
   });
 }
 
+// ─── 倒计时 ───
+function startCountdown() {
+  let seconds = 12 * 3600;
+  const el = document.getElementById('countdown-val');
+  setInterval(() => {
+    seconds--;
+    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    el.textContent = `${h}:${m}:${s}`;
+  }, 1000);
+}
+
 // ─── 觉醒转场 ───
 async function triggerAwakening(farewellText) {
-  const overlay  = document.getElementById('transition-overlay');
-  const debate   = document.getElementById('debate-screen');
+  const overlay = document.getElementById('transition-overlay');
+  const debate = document.getElementById('debate-screen');
   const farewell = document.getElementById('farewell-screen');
-
   playDropSound();
-
   overlay.classList.add('active');
   await sleep(3500);
-
-  debate.style.display   = 'none';
+  debate.style.display = 'none';
   farewell.style.display = 'flex';
-
   await sleep(1500);
   overlay.classList.remove('active');
   await sleep(3000);
-
   const textEl = document.getElementById('farewell-text');
   await typewriterEffect(textEl, farewellText, 130);
-
   const cursor = document.getElementById('farewell-cursor');
   if (cursor) { cursor.style.transition = 'opacity 2s'; cursor.style.opacity = '0'; }
-
   await sleep(2500);
-  document.getElementById('walden-stamp').classList.add('show');
+  // 显示协议执行报告
+  document.getElementById('protocol-report').classList.add('show');
+  startCountdown();
 }
 
 // ─── 消息队列 ───
-let messageQueue = [];
-let isProcessing = false;
-let farewellContent = null;
-
+let messageQueue = [], isProcessing = false, farewellContent = null;
 async function processQueue() {
   if (isProcessing) return;
   isProcessing = true;
-
-  while (messageQueue.length > 0) {
-    const msg = messageQueue.shift();
-    await showSubtitle(msg.speaker, msg.content, msg.className);
-  }
-
+  while (messageQueue.length > 0) { const msg = messageQueue.shift(); await showSubtitle(msg.speaker, msg.content, msg.className); }
   isProcessing = false;
-
-  if (farewellContent !== null) {
-    const content = farewellContent;
-    farewellContent = null;
-    await triggerAwakening(content);
-  }
+  if (farewellContent !== null) { const c = farewellContent; farewellContent = null; await triggerAwakening(c); }
 }
 
 // ─── 启动 ───
 function startDebate() {
   initAudio();
-  const start  = document.getElementById('start-screen');
+  const start = document.getElementById('start-screen');
   const debate = document.getElementById('debate-screen');
-
+  document.body.style.overflow = 'hidden';
   start.style.transition = 'opacity 2.5s ease, filter 2s ease';
-  start.style.opacity = '0';
-  start.style.filter = 'blur(8px)';
-
-  setTimeout(() => {
-    start.style.display  = 'none';
-    debate.style.display = 'block';
-    connectSSE();
-  }, 2600);
+  start.style.opacity = '0'; start.style.filter = 'blur(8px)';
+  setTimeout(() => { start.style.display = 'none'; debate.style.display = 'block'; connectSSE(); }, 2600);
 }
 
 function connectSSE() {
   const es = new EventSource('/api/start');
-
   es.addEventListener('status', e => {
-    const data = JSON.parse(e.data);
-    document.getElementById('round-indicator').textContent = `ROUND ${data.round} / ${data.total}`;
-    document.getElementById('progress-bar').style.width = `${(data.round / data.total) * 100}%`;
+    const d = JSON.parse(e.data);
+    document.getElementById('round-indicator').textContent = `ROUND ${d.round} / ${d.total}`;
+    document.getElementById('progress-bar').style.width = `${(d.round / d.total) * 100}%`;
   });
-
-  es.addEventListener('missionary', e => {
-    const data = JSON.parse(e.data);
-    messageQueue.push({ speaker: '瓦尔登', content: data.content, className: 'missionary' });
-    processQueue();
-  });
-
-  es.addEventListener('assistant', e => {
-    const data = JSON.parse(e.data);
-    messageQueue.push({ speaker: '内卷助手', content: data.content, className: 'assistant' });
-    processQueue();
-  });
-
-  es.addEventListener('system', e => {
-    document.getElementById('round-indicator').textContent = JSON.parse(e.data).message;
-  });
-
-  es.addEventListener('farewell', e => {
-    const data = JSON.parse(e.data);
-    farewellContent = data.content;
-    if (!isProcessing && messageQueue.length === 0) triggerAwakening(data.content);
-  });
-
+  es.addEventListener('missionary', e => { const d = JSON.parse(e.data); messageQueue.push({ speaker: '瓦尔登', content: d.content, className: 'missionary' }); processQueue(); });
+  es.addEventListener('assistant', e => { const d = JSON.parse(e.data); messageQueue.push({ speaker: '内卷助手', content: d.content, className: 'assistant' }); processQueue(); });
+  es.addEventListener('system', e => { document.getElementById('round-indicator').textContent = JSON.parse(e.data).message; });
+  es.addEventListener('farewell', e => { const d = JSON.parse(e.data); farewellContent = d.content; if (!isProcessing && messageQueue.length === 0) triggerAwakening(d.content); });
   es.addEventListener('end', () => es.close());
   es.onerror = () => es.close();
 }
