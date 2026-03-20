@@ -1038,8 +1038,7 @@ body::after {
 
 </div><!-- end of #start-screen -->
 
-<div id="debate-screen">
-<div id="debate-screen">
+<div id="debate-screen" style="display:none; position:fixed; inset:0; z-index:10; background:var(--deep-earth); color:var(--cream); font-family:var(--font-serif);">
   <div class="debate-header">
     <div class="debate-header-left"><div class="status-dot"></div><span>链路活跃</span></div>
     <div id="round-indicator"></div>
@@ -1050,7 +1049,7 @@ body::after {
   </div>
   <div id="subtitle-container"></div>
   <div class="debate-progress" id="progress-bar" style="width: 0%"></div>
-</div>
+</div><!-- end of #debate-screen -->
 
 <!-- ═══ 觉醒信件界面 ═══ -->
 <div id="farewell-screen">
@@ -1351,7 +1350,7 @@ function startDebate() {
   const start = document.getElementById('start-screen');
   const debate = document.getElementById('debate-screen');
   
-  // Create a cinematic transition
+  // 电影级转场
   document.body.style.overflow = 'hidden';
   start.style.transition = 'opacity 2.5s ease, filter 2s ease';
   start.style.opacity = '0'; 
@@ -1360,9 +1359,24 @@ function startDebate() {
   const pgrain = document.querySelector('.dark-theater-grain');
   if (pgrain) pgrain.style.display = 'block';
 
+  // 隐藏 immersive-bg 和 top nav
+  const immBg = document.querySelector('.immersive-bg');
+  if (immBg) immBg.style.display = 'none';
+  
+  // 隐藏底栏
+  const bottomNav = document.querySelector('.layout-bottom-nav');
+  if (bottomNav) bottomNav.style.display = 'none';
+
   setTimeout(() => { 
     start.style.display = 'none'; 
-    debate.style.display = 'block'; 
+    
+    // 强制 body 暗色
+    document.body.style.backgroundColor = '#0c0f08';
+    document.body.style.color = '#f0ead6';
+    
+    // 强制 debate-screen 全屏暗色
+    debate.style.cssText = 'display:block; position:fixed; inset:0; z-index:10; background:#0c0f08; color:#f0ead6; overflow:hidden;';
+    
     connectSSE(); 
   }, 2600);
 }
