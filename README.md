@@ -122,14 +122,14 @@ graph TD
 ├── main.py                # FastAPI 后端（本地开发用）
 ├── api/
 │   ├── start.py           # Vercel Serverless Function（线上部署用）
-│   └── requirements.txt   # Vercel Python 依赖
+│   └── requirements-local.txt   # Vercel Python 依赖
 ├── static/
 │   └── index.html         # 前端页面（本地开发用）
 ├── public/
 │   ├── index.html          # 前端页面（Vercel 部署用）
 │   └── cover.png           # 封面图
 ├── vercel.json             # Vercel 路由配置
-├── requirements.txt        # Python 依赖（本地开发用）
+├── requirements-local.txt        # Python 依赖（本地开发用）
 ├── .env.example            # 环境变量模板
 ├── cover.png               # 项目封面
 └── README.md
@@ -161,7 +161,7 @@ cd Secondme-Walden
 # 2. 创建虚拟环境并安装依赖
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-local.txt
 
 # 3. 配置 API Key
 cp .env.example .env
