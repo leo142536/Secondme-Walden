@@ -903,6 +903,8 @@ body::after {
 <body class="text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container">
 
 <div id="transition-overlay"></div>
+<!-- Toast Notification -->
+<div id="toast-container" class="fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 <div class="dark-theater-grain"></div>
 
 <div id="start-screen" class="relative z-10 block transition-all">
@@ -921,25 +923,25 @@ body::after {
 <span class="text-3xl font-serif italic font-black text-emerald-950">Walden</span>
 <div class="flex items-center gap-8">
 <div class="hidden md:flex items-center gap-8 font-serif italic tracking-wider text-lg">
-<a class="text-emerald-900 font-black border-b-2 border-emerald-900" href="#">Breathe</a>
-<a class="text-emerald-800/60 hover:text-emerald-900 transition-all" href="#">Reflect</a>
-<a class="text-emerald-800/60 hover:text-emerald-900 transition-all" href="#">Garden</a>
+<a href="javascript:void(0)" onclick="featureComingSoon(\'Breathe 冥想\')" class="text-emerald-900 font-black border-b-2 border-emerald-900">Breathe</a>
+<a href="javascript:void(0)" onclick="featureComingSoon(\'Reflect 反思\')" class="text-emerald-800/60 hover:text-emerald-900 transition-all">Reflect</a>
+<a href="javascript:void(0)" onclick="featureComingSoon(\'Garden 数字花园\')" class="text-emerald-800/60 hover:text-emerald-900 transition-all">Garden</a>
 </div>
 
 <!-- Compact Language Toggle -->
 <div class="hidden md:flex bg-white/50 rounded-full p-1 shadow-sm border border-white/60 ml-4">
-<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-950 text-white shadow-sm transition-all focus:outline-none">
+<button id="btn-lang-en" onclick="toggleLang('en')" class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-950 text-white shadow-sm transition-all focus:outline-none hover:bg-emerald-900">
 <span class="material-symbols-outlined text-sm">language</span>
 <span class="font-serif text-[0.7rem] font-bold tracking-wider">EN</span>
 </button>
-<button class="flex items-center gap-1 px-3 py-1.5 rounded-full text-emerald-900/60 hover:text-emerald-950 transition-colors focus:outline-none">
+<button id="btn-lang-zh" onclick="toggleLang('zh')" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-emerald-900/60 hover:text-emerald-950 transition-colors focus:outline-none">
 <span class="font-serif text-[0.7rem] font-bold tracking-wider">ZH</span>
 </button>
 </div>
 
 <div class="flex items-center gap-2 ml-4">
-<button class="material-symbols-outlined text-emerald-950 p-2 hover:bg-white/40 hover:shadow-sm rounded-full transition-all text-xl">settings</button>
-<button class="material-symbols-outlined text-emerald-950 p-2 hover:bg-white/40 hover:shadow-sm rounded-full transition-all text-xl">eco</button>
+<button onclick="featureComingSoon('Setting 设置')" class="material-symbols-outlined text-emerald-950 p-2 hover:bg-white/40 hover:shadow-sm rounded-full transition-all text-xl">settings</button>
+<button onclick="featureComingSoon('生态保护区')" class="material-symbols-outlined text-emerald-950 p-2 hover:bg-white/40 hover:shadow-sm rounded-full transition-all text-xl">eco</button>
 </div>
 </div>
 </div>
@@ -1016,19 +1018,19 @@ body::after {
 </main>
 <!-- BottomNavBar (Compressed) -->
 <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 pb-8 pt-4 bg-white/40 backdrop-blur-3xl rounded-t-[3rem] border-t border-white/30 hidden md:flex layout-bottom-nav">
-<a class="flex flex-col items-center justify-center bg-emerald-950 text-white rounded-3xl px-8 py-2.5 shadow-lg scale-105" href="#">
-<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">air</span>
+<a class="flex flex-col items-center justify-center bg-emerald-950 text-white rounded-3xl px-8 py-2.5 shadow-lg scale-105" href="javascript:void(0)" onclick="featureComingSoon(\'Breathe 冥想深度版\')">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: \'FILL\' 1;">air</span>
 <span class="font-sans text-[10px] font-black tracking-[0.2em] uppercase mt-1">Breathe</span>
 </a>
-<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-2.5" href="#">
+<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-2.5" href="javascript:void(0)" onclick="featureComingSoon(\'Reflect 反思\')">
 <span class="material-symbols-outlined text-2xl">auto_awesome</span>
 <span class="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Reflect</span>
 </a>
-<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-2.5" href="#">
+<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-2.5" href="javascript:void(0)" onclick="featureComingSoon(\'Garden 数字花园\')">
 <span class="material-symbols-outlined text-2xl">psychology</span>
 <span class="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Garden</span>
 </a>
-<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-2.5" href="#">
+<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-2.5" href="javascript:void(0)" onclick="featureComingSoon(\'Profile 用户中心\')">
 <span class="material-symbols-outlined text-2xl">person</span>
 <span class="font-sans text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Profile</span>
 </a>
@@ -1380,6 +1382,44 @@ function connectSSE() {
   es.addEventListener('end', () => es.close());
   es.onerror = () => es.close();
 }
+
+// ─── 轻量级提示框 (Toast) ───
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'bg-emerald-950/90 text-white px-6 py-3 rounded-full shadow-2xl backdrop-blur-md font-sans text-sm tracking-wide transform transition-all duration-300 translate-y-[-20px] opacity-0 flex items-center gap-2 border border-emerald-800/50';
+  toast.innerHTML = `<span class="material-symbols-outlined text-sm">info</span> ${message}`;
+  container.appendChild(toast);
+  
+  requestAnimationFrame(() => {
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+  });
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(-20px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+// ─── 页面交互逻辑 ───
+function featureComingSoon(featureName) {
+  showToast(`${featureName} 模块正在接入神经网络，敬请期待...`);
+}
+
+function toggleLang(lang) {
+  const btnEn = document.getElementById('btn-lang-en') || document.querySelector('button:has(span.text-sm:contains("English"))');
+  const btnZh = document.getElementById('btn-lang-zh') || document.querySelector('button:has(span.text-sm:contains("Chinese"))');
+  
+  if(lang === 'zh') {
+    showToast("已切换至中文版体验");
+  } else {
+    showToast("English version is under construction.");
+  }
+}
+
 </script>
 </body>
 </html>
