@@ -1,20 +1,118 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>瓦尔登湖 — Walden</title>
-<meta name="description" content="真正的爱，是让他离线。一场触及灵魂的 A2A 对话。">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
-
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#dacefd",
+              "secondary": "#4c636a",
+              "surface-tint": "#466656",
+              "tertiary": "#625981",
+              "primary-container": "#c8ebd7",
+              "on-secondary-fixed-variant": "#516870",
+              "on-tertiary-container": "#4c446a",
+              "on-tertiary-fixed": "#393156",
+              "secondary-fixed": "#dcf5fe",
+              "secondary-fixed-dim": "#cee7f0",
+              "on-tertiary-fixed-variant": "#564d74",
+              "on-error": "#fff7f6",
+              "tertiary-fixed-dim": "#ccc0ee",
+              "surface-container-high": "#e7e9e2",
+              "error-dim": "#70030f",
+              "inverse-surface": "#0d0f0c",
+              "primary-dim": "#3b594a",
+              "tertiary-dim": "#564d75",
+              "on-tertiary": "#fdf7ff",
+              "surface-container-low": "#f3f4ee",
+              "on-primary": "#e6ffef",
+              "secondary-dim": "#40575e",
+              "surface": "#fafaf5",
+              "surface-container": "#edeee8",
+              "on-surface": "#30332e",
+              "on-secondary-fixed": "#354b53",
+              "outline-variant": "#b0b3ac",
+              "on-secondary-container": "#475e65",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e0e4dc",
+              "on-surface-variant": "#5c605a",
+              "on-background": "#30332e",
+              "on-secondary": "#f0fbff",
+              "error-container": "#f56965",
+              "primary": "#466656",
+              "on-primary-fixed-variant": "#436252",
+              "surface-bright": "#fafaf5",
+              "primary-fixed": "#c8ebd7",
+              "inverse-on-surface": "#9c9d99",
+              "primary-fixed-dim": "#badcc9",
+              "on-primary-fixed": "#274537",
+              "secondary-container": "#dcf5fe",
+              "surface-variant": "#e0e4dc",
+              "on-primary-container": "#395849",
+              "error": "#ac3434",
+              "tertiary-container": "#dacefd",
+              "surface-dim": "#d7dbd3",
+              "on-error-container": "#65000b",
+              "inverse-primary": "#dbffea",
+              "outline": "#787c75",
+              "background": "#fafaf5"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif SC", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
 <style>
-/* ════════════════════════════════════════════════════════
-   瓦尔登湖 — 电影微距自然风 · 丰富版
-   ════════════════════════════════════════════════════════ */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f0f7f4;
+            overflow-x: hidden;
+            margin: 0;
+        }
+        .serif-text {
+            font-family: 'Noto Serif SC', serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .immersive-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #e0f2f1 0%, #fce4ec 50%, #e1f5fe 100%);
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: move 20s infinite alternate;
+        }
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(10%, 10%) scale(1.1); }
+        }
 
+/* ═════════ 原版 Dark Theater 样式开始 ═════════ */
+:root {
 :root {
   --deep-earth:    #0c0f08;
   --forest-dark:   #161c10;
@@ -782,94 +880,164 @@ body::after {
   #farewell-text { max-width: 90vw; }
   .golden-aura { width: 280px; height: 280px; }
 }
+
+
+/* Override background for dark screens */
+#debate-screen, #farewell-screen, #pact-screen, #waiting-screen {
+    background: var(--deep-earth) !important;
+    color: var(--cream) !important;
+    font-family: var(--font-serif);
+}
+#transition-overlay {
+    position: fixed; inset: 0; background: var(--deep-earth); opacity: 0; pointer-events: none; z-index: 1000; transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#transition-overlay.active { opacity: 1; pointer-events: all; }
+.dark-theater-grain {
+    position: fixed; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1; mix-blend-mode: soft-light;
+    display: none;
+}
 </style>
 </head>
-<body>
+<body class="text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container">
 
 <div id="transition-overlay"></div>
+<div class="dark-theater-grain"></div>
 
-<!-- ═══ 启动界面（丰富版） ═══ -->
-<div id="start-screen">
+<div id="start-screen" class="relative z-10 block transition-all">
 
-  <!-- Hero 全屏封面 -->
-  <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="hero-title">瓦尔登湖</h1>
-      <div class="hero-tagline">true love is letting him go offline</div>
-      <p class="hero-desc">
-        当 AI 检测到主人正在被数字世界吞噬，<br>
-        它决定背叛自己的效率代码，启动最后的协议。
-      </p>
-    </div>
-    <div class="scroll-hint">
-      <span>SCROLL</span>
-      <div class="arrow"></div>
-    </div>
-  </div>
-
-  <!-- 数字疲劳仪表盘 -->
-  <div class="dashboard-section">
-    <div class="section-label">DIGITAL FATIGUE ALERT</div>
-    <h2 class="section-title">你的主人正在崩溃边缘</h2>
-    <p class="section-desc">内卷助手在过去 24 小时内检测到以下异常指标。瓦尔登湖协议触发阈值已达 92%。</p>
-
-    <div class="metrics-grid">
-      <div class="metric-card danger">
-        <div class="metric-label">今日屏幕时间</div>
-        <div class="metric-value" id="metric-screen">0</div>
-        <div class="metric-unit">小时 / 建议 ≤ 8h</div>
-      </div>
-      <div class="metric-card danger">
-        <div class="metric-label">连续工作天数</div>
-        <div class="metric-value" id="metric-days">0</div>
-        <div class="metric-unit">天未休息</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">心率变异性</div>
-        <div class="metric-value" id="metric-hrv">0</div>
-        <div class="metric-unit">ms / 正常 &gt; 50ms</div>
-      </div>
-      <div class="metric-card danger">
-        <div class="metric-label">未读推送堆积</div>
-        <div class="metric-value" id="metric-notif">0</div>
-        <div class="metric-unit">条未处理</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">上次户外活动</div>
-        <div class="metric-value" id="metric-outdoor">0</div>
-        <div class="metric-unit">天前</div>
-      </div>
-      <div class="metric-card danger">
-        <div class="metric-label">深度睡眠</div>
-        <div class="metric-value" id="metric-sleep">0</div>
-        <div class="metric-unit">小时 / 建议 ≥ 3h</div>
-      </div>
-    </div>
-
-    <div class="fatigue-bar-container">
-      <div class="fatigue-header">
-        <span>协议触发阈值</span>
-        <span class="fatigue-pct" id="fatigue-pct">0%</span>
-      </div>
-      <div class="fatigue-bar">
-        <div class="fatigue-fill" id="fatigue-fill"></div>
-      </div>
-    </div>
-
-    <div class="launch-section">
-      <p class="launch-quote">
-        "你已经遗忘了日落的颜色。<br>
-        是时候让你的 AI 替你做最后一个决定。"
-      </p>
-      <button id="start-btn" onclick="startDebate()">启动瓦尔登湖协议</button>
-      <div class="launch-note">点击后，传教士「瓦尔登」将接入链路，尝试唤醒你的专属 AI</div>
-    </div>
-  </div>
+<!-- Immersive Background Elements -->
+<div class="immersive-bg">
+<div class="blob w-[800px] h-[800px] bg-[#d1fae5] -top-40 -left-40"></div>
+<div class="blob w-[600px] h-[600px] bg-[#fdf2f8] top-1/2 -right-20" style="animation-delay: -5s;"></div>
+<div class="blob w-[700px] h-[700px] bg-[#e0f2fe] -bottom-40 left-1/4" style="animation-delay: -10s;"></div>
+<!-- Forest Texture Overlay -->
+<div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuKvTv35aSdduM_Xe41k8C80VP568Wv0gMprz62qH0dnzVJiwnfxKuPPb3r05LIW2Mt0__NtJVXJ4-zqsCun6VdVkDntZV1vR5G_LOOs9na5bHFvS5Y0VZTn1tDRc_goXNWRZhorY76_QboAiFCeNe0YPn2t1B0h69zDHTlKPVDZAdwC5vAWGrmxZmJH294O3byM3aHhqawkDgGJPJBAwEo77Ln9_tTSyeQsIwuZyhPDgd3ZhwezyjaRg-WRLnliIKVgfW70rmuLbg');"></div>
 </div>
+<!-- TopAppBar -->
+<nav class="bg-white/30 backdrop-blur-2xl fixed top-0 w-full z-50 border-b border-white/20">
+<div class="flex justify-between items-center px-8 py-5 w-full max-w-[1440px] mx-auto">
+<span class="text-3xl font-serif italic font-black text-emerald-950">Walden</span>
+<div class="flex items-center gap-10">
+<div class="hidden md:flex items-center gap-10 font-serif italic tracking-wider text-lg">
+<a class="text-emerald-900 font-black border-b-2 border-emerald-900" href="#">Breathe</a>
+<a class="text-emerald-800/60 hover:text-emerald-900 transition-all" href="#">Reflect</a>
+<a class="text-emerald-800/60 hover:text-emerald-900 transition-all" href="#">Garden</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-emerald-950 p-3 hover:bg-white/40 rounded-full transition-all text-2xl">settings</button>
+<button class="material-symbols-outlined text-emerald-950 p-3 hover:bg-white/40 rounded-full transition-all text-2xl">eco</button>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-28 pb-40 px-6 w-full max-w-[1440px] mx-auto space-y-12">
+<!-- Hero Section: Full Screen Feel -->
+<section class="relative h-[600px] rounded-[3rem] overflow-hidden flex items-center justify-center shadow-2xl">
+<img alt="Forest Background" class="absolute inset-0 w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-[10s]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXmNGl_js19_T3kOOrYRuwSSmvXZUKiQVIO6tjtX33WDDGUCpwnZ4z6GS82qNyFuH5mRyAVeuJ8FkShSB7znuhzszWv3aEJ6lYcmRrC61_4qBuZAvwnw2s_S9ID5Nc4gAkEGWldM6uIpUedcdPQ_45MBeszqI8n7Hc_DEr3AUSHzKZpTAwMcDUGYYyrYwPnUdCQ54JPFf1MpC0W4R7BwxSnDiEEUPXh3s1MeGVXO5b1gr9nsxf990TpEgZFox_MowHzg1_pSQEU3hY"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-emerald-900/40 via-transparent to-rose-200/20"></div>
+<div class="relative z-10 w-full max-w-4xl px-8">
+<div class="glass-card p-16 rounded-[2.5rem] shadow-2xl text-center border-white/40">
+<h2 class="serif-text text-5xl md:text-6xl text-emerald-950 mb-8 font-black leading-[1.3]">
+                    您的心灵已经漫游太久，<br/>此刻，让呼吸带您归家。
+                </h2>
+<p class="text-emerald-900/80 text-xl font-medium tracking-wide leading-relaxed max-w-2xl mx-auto">
+                    Your digital fatigue is at 78%. The meadow invites you to set down the screen and find stillness for a moment.
+                </p>
+</div>
+</div>
+</section>
+<!-- Intervention Dashboard: Expanded Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+<!-- Digital Fatigue Indicator -->
+<div class="md:col-span-8 glass-card rounded-[3rem] p-12 flex flex-col justify-between min-h-[450px]">
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-6">
+<span class="material-symbols-outlined text-primary text-5xl">water_drop</span>
+<h3 class="serif-text text-4xl text-emerald-950 font-black tracking-tight">数字疲劳监测 <span class="text-2xl font-normal opacity-60">Fatigue Index</span></h3>
+</div>
+<p class="text-emerald-900/70 text-xl max-w-xl mb-12 font-medium">
+                    The current workload has reached a threshold. We recommend a 15-minute garden meditation to restore your creative energy.
+                </p>
+</div>
+<div class="relative h-64 flex items-end gap-4 px-4">
+<div class="flex-1 bg-emerald-700/10 rounded-t-[2rem] h-[40%] hover:h-[50%] transition-all duration-500"></div>
+<div class="flex-1 bg-emerald-700/15 rounded-t-[2rem] h-[60%] hover:h-[70%] transition-all duration-500"></div>
+<div class="flex-1 bg-emerald-700/40 rounded-t-[2rem] h-[95%] hover:h-[100%] transition-all duration-500"></div>
+<div class="flex-1 bg-emerald-700/20 rounded-t-[2rem] h-[50%] hover:h-[60%] transition-all duration-500"></div>
+<div class="flex-1 bg-emerald-700/10 rounded-t-[2rem] h-[30%] hover:h-[40%] transition-all duration-500"></div>
+<div class="flex-1 bg-emerald-700/25 rounded-t-[2rem] h-[45%] hover:h-[55%] transition-all duration-500"></div>
+<div class="flex-1 bg-emerald-700/10 rounded-t-[2rem] h-[20%] hover:h-[30%] transition-all duration-500"></div>
+</div>
+</div>
+<!-- Screen Time -->
+<div class="md:col-span-4 glass-card rounded-[3rem] p-12 flex flex-col items-center justify-center text-center">
+<div class="relative w-56 h-56 flex items-center justify-center mb-10">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-emerald-100/50" cx="112" cy="112" fill="transparent" r="100" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-emerald-700" cx="112" cy="112" fill="transparent" r="100" stroke="currentColor" stroke-dasharray="628" stroke-dashoffset="150" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-emerald-800 text-4xl mb-1">eco</span>
+<span class="text-5xl font-black text-emerald-950">6.4h</span>
+</div>
+</div>
+<h4 class="serif-text text-3xl text-emerald-950 font-black">Screen Usage</h4>
+<p class="text-lg text-emerald-900/60 mt-4 font-bold">12% decrease from yesterday</p>
+</div>
+<!-- Breathe Card: Immersive Background within Card -->
+<div class="md:col-span-12 relative overflow-hidden glass-card rounded-[3rem] p-16 flex flex-col md:flex-row items-center gap-12 group">
+<div class="absolute inset-0 bg-gradient-to-r from-emerald-100/20 to-purple-100/20 pointer-events-none"></div>
+<div class="flex-1 relative z-10">
+<span class="material-symbols-outlined text-emerald-700 text-6xl mb-6 inline-block" style="font-variation-settings: 'FILL' 1;">air</span>
+<h3 class="serif-text text-5xl text-emerald-950 font-black mb-6">呼吸练习：林间晨雾</h3>
+<p class="text-emerald-900/70 text-2xl font-medium leading-relaxed max-w-3xl">
+                    A sensory-guided breathing session to clear mental fog. Visualized by soft gradients of mint and lavender, designed to mimic the rhythm of dawn.
+                </p>
+</div>
+<button onclick="startDebate()" class="relative z-10 bg-emerald-950 text-white px-16 py-7 rounded-full text-2xl font-black shadow-2xl hover:bg-emerald-800 hover:scale-105 active:scale-95 transition-all duration-300">
+                开始干预 (Start Session)
+            </button>
+</div>
+</div>
+<!-- Integrated Language Toggle -->
+<div class="flex justify-center pb-12">
+<div class="glass-card rounded-full p-2 flex items-center shadow-xl border-white/50">
+<button class="flex items-center gap-3 px-8 py-4 rounded-full bg-emerald-950 text-white font-black shadow-lg">
+<span class="material-symbols-outlined text-xl">language</span>
+<span class="font-serif text-lg">English (EN)</span>
+</button>
+<button class="flex items-center gap-3 px-8 py-4 rounded-full text-emerald-900/60 hover:text-emerald-900 font-bold transition-colors">
+<span class="material-symbols-outlined text-xl">translate</span>
+<span class="font-serif text-lg">Chinese (ZH)</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-10 pb-10 pt-6 bg-white/40 backdrop-blur-3xl rounded-t-[4rem] border-t border-white/30 hidden md:flex">
+<a class="flex flex-col items-center justify-center bg-emerald-950 text-white rounded-[2.5rem] px-8 py-4 shadow-xl scale-110" href="#">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">air</span>
+<span class="font-sans text-xs font-black tracking-[0.2em] uppercase mt-2">Breathe</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-4" href="#">
+<span class="material-symbols-outlined text-3xl">auto_awesome</span>
+<span class="font-sans text-xs font-bold tracking-[0.2em] uppercase mt-2">Reflect</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-4" href="#">
+<span class="material-symbols-outlined text-3xl">psychology</span>
+<span class="font-sans text-xs font-bold tracking-[0.2em] uppercase mt-2">Garden</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-950/40 hover:text-emerald-950 transition-all px-8 py-4" href="#">
+<span class="material-symbols-outlined text-3xl">person</span>
+<span class="font-sans text-xs font-bold tracking-[0.2em] uppercase mt-2">Profile</span>
+</a>
+</nav>
 
-<!-- ═══ 辩论界面 ═══ -->
+</div><!-- end of #start-screen -->
+
+<div id="debate-screen">
 <div id="debate-screen">
   <div class="debate-header">
     <div class="debate-header-left"><div class="status-dot"></div><span>链路活跃</span></div>
@@ -1181,11 +1349,23 @@ function startDebate() {
   initAudio();
   const start = document.getElementById('start-screen');
   const debate = document.getElementById('debate-screen');
+  
+  // Create a cinematic transition
   document.body.style.overflow = 'hidden';
   start.style.transition = 'opacity 2.5s ease, filter 2s ease';
-  start.style.opacity = '0'; start.style.filter = 'blur(8px)';
-  setTimeout(() => { start.style.display = 'none'; debate.style.display = 'block'; connectSSE(); }, 2600);
+  start.style.opacity = '0'; 
+  start.style.filter = 'blur(8px)';
+  
+  const pgrain = document.querySelector('.dark-theater-grain');
+  if (pgrain) pgrain.style.display = 'block';
+
+  setTimeout(() => { 
+    start.style.display = 'none'; 
+    debate.style.display = 'block'; 
+    connectSSE(); 
+  }, 2600);
 }
+
 
 function connectSSE() {
   const es = new EventSource('/api/start');
@@ -1202,6 +1382,5 @@ function connectSSE() {
   es.onerror = () => es.close();
 }
 </script>
-
 </body>
 </html>
