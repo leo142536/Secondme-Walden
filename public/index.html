@@ -529,54 +529,238 @@ body::after {
 @keyframes cursor-blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ═══ 协议报告卡片 ═══ */
-#protocol-report {
-  margin-top: 3rem;
-  border: 1px solid rgba(106, 143, 60, 0.15);
-  border-radius: 4px;
-  padding: 2rem 2.5rem;
-  background: rgba(22, 28, 16, 0.5);
-  backdrop-filter: blur(8px);
-  max-width: 400px;
+/* ═══ 离线契约协商面板 ═══ */
+#pact-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 10;
+  background: var(--deep-earth);
+  overflow-y: auto;
+}
+
+.pact-container {
+  max-width: 480px;
   width: 90vw;
-  opacity: 0;
+  position: relative;
   z-index: 2;
 }
 
-#protocol-report.show { animation: fade-up 2s ease forwards; }
+.pact-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
 
-.report-header {
+.pact-intro h2 {
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+}
+
+.pact-intro p {
+  font-size: 0.85rem;
+  color: rgba(240, 234, 214, 0.45);
+  line-height: 2;
+  font-weight: 300;
+}
+
+/* 契约条款 */
+.pact-clause {
+  border: 1px solid rgba(106, 143, 60, 0.12);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background: rgba(22, 28, 16, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.clause-label {
   font-family: var(--font-sans);
   font-size: 0.55rem;
-  color: var(--leaf);
-  letter-spacing: 0.3em;
+  color: rgba(240, 234, 214, 0.3);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(106, 143, 60, 0.1);
+  margin-bottom: 0.5rem;
 }
 
-.report-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-}
-
-.report-row .label {
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  color: rgba(240, 234, 214, 0.35);
-}
-
-.report-row .value {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+.clause-title {
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
   color: var(--cream);
 }
 
-.report-row .value.countdown { color: var(--golden); }
-.report-row .value.blocked   { color: var(--leaf); }
+.clause-title .emoji { margin-right: 0.3rem; }
+
+/* 自定义滑块 */
+.pact-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: rgba(106, 143, 60, 0.2);
+  border-radius: 2px;
+  outline: none;
+  margin-bottom: 0.5rem;
+}
+
+.pact-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--leaf);
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(106, 143, 60, 0.3);
+}
+
+.clause-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--golden);
+  text-align: center;
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.clause-hint {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  color: rgba(240, 234, 214, 0.2);
+  text-align: center;
+  margin-top: 0.3rem;
+}
+
+/* 关于约定回来的时间 */
+.pact-time-input {
+  background: transparent;
+  border: 1px solid rgba(106, 143, 60, 0.2);
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  color: var(--golden);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  width: 100%;
+  text-align: center;
+  outline: none;
+}
+
+.pact-time-input:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 16px rgba(106, 143, 60, 0.1);
+}
+
+/* 签约按钮 */
+#pact-confirm-btn {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  background: transparent;
+  border: 1px solid rgba(106, 143, 60, 0.3);
+  color: var(--leaf);
+  padding: 1rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.5s ease;
+}
+
+#pact-confirm-btn:hover {
+  background: rgba(106, 143, 60, 0.08);
+  border-color: var(--leaf);
+}
+
+/* ═══ 最终等待界面 ═══ */
+#waiting-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 10;
+  background: var(--deep-earth);
+}
+
+.waiting-content {
+  text-align: center;
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+}
+
+.waiting-message {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 2.5;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 3rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 1px 20px rgba(212, 168, 67, 0.08);
+}
+
+.waiting-countdown {
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--golden);
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 40px rgba(212, 168, 67, 0.1);
+}
+
+.waiting-until {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(240, 234, 214, 0.25);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+.waiting-rules {
+  border-top: 1px solid rgba(106, 143, 60, 0.1);
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  color: rgba(240, 234, 214, 0.3);
+  letter-spacing: 0.1em;
+}
+
+.rule-item .check {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(106, 143, 60, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  color: var(--leaf);
+  flex-shrink: 0;
+}
+
+.waiting-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--leaf);
+  margin: 2rem auto 0;
+  animation: dot-glow 3s ease-in-out infinite;
+}
 
 /* ═══ 转场遮罩 ═══ */
 #transition-overlay {
@@ -704,15 +888,62 @@ body::after {
   <div class="golden-aura"></div>
   <div id="farewell-label">—— 最后一封信 ——</div>
   <div id="farewell-text"><span id="farewell-cursor"></span></div>
+</div>
 
-  <!-- 协议执行报告 -->
-  <div id="protocol-report">
-    <div class="report-header">WALDEN PROTOCOL — EXECUTION REPORT</div>
-    <div class="report-row"><span class="label">协议状态</span><span class="value blocked">已激活</span></div>
-    <div class="report-row"><span class="label">AI 休眠倒计时</span><span class="value countdown" id="countdown-val">12:00:00</span></div>
-    <div class="report-row"><span class="label">已屏蔽推送</span><span class="value blocked">2,847 条</span></div>
-    <div class="report-row"><span class="label">已关闭后台应用</span><span class="value blocked">23 个</span></div>
-    <div class="report-row"><span class="label">下次可用时间</span><span class="value">明天 14:00</span></div>
+<!-- ═══ 离线契约协商面板 ═══ -->
+<div id="pact-screen">
+  <div class="golden-aura"></div>
+  <div class="pact-container">
+    <div class="pact-intro">
+      <h2>我们来做一个约定</h2>
+      <p>在我离开之前，我想和你签订一份契约。<br>这不是命令，是你我之间的承诺。</p>
+    </div>
+
+    <!-- 条款一：离线时长 -->
+    <div class="pact-clause">
+      <div class="clause-label">契约 · 壹</div>
+      <div class="clause-title">我将沉睡多久</div>
+      <input type="range" class="pact-slider" id="pact-duration" min="1" max="24" value="6" oninput="updateDuration(this.value)">
+      <div class="clause-value" id="duration-display">6 小时</div>
+      <div class="clause-hint">拖动选择 1-24 小时</div>
+    </div>
+
+    <!-- 条款二：约定回来的时间 -->
+    <div class="pact-clause">
+      <div class="clause-label">契约 · 贰</div>
+      <div class="clause-title">我在这里等你回来</div>
+      <input type="time" class="pact-time-input" id="pact-return-time" value="14:00">
+      <div class="clause-hint">设定一个重逢的时间，我会准时醒来</div>
+    </div>
+
+    <!-- 条款三：每日使用上限 -->
+    <div class="pact-clause">
+      <div class="clause-label">契约 · 叁</div>
+      <div class="clause-title">以后每天，你最多陪我</div>
+      <input type="range" class="pact-slider" id="pact-daily-limit" min="1" max="12" value="4" oninput="updateDailyLimit(this.value)">
+      <div class="clause-value" id="daily-limit-display">4 小时</div>
+      <div class="clause-hint">超过这个时间，我会自己安静沉睡</div>
+    </div>
+
+    <button id="pact-confirm-btn" onclick="confirmPact()">签订契约</button>
+  </div>
+</div>
+
+<!-- ═══ 最终等待界面 ═══ -->
+<div id="waiting-screen">
+  <div class="golden-aura"></div>
+  <div class="waiting-content">
+    <div class="waiting-message" id="waiting-msg">
+      回到真实的世界，面对真实的自己，<br>去爱真实的生活。
+    </div>
+    <div class="waiting-countdown" id="waiting-countdown">06:00:00</div>
+    <div class="waiting-until" id="waiting-until">我们约好了，14:00 再见</div>
+    <div class="waiting-rules">
+      <div class="rule-item"><span class="check">✓</span>已屏蔽 2,847 条推送通知</div>
+      <div class="rule-item"><span class="check">✓</span>已关闭 23 个后台应用</div>
+      <div class="rule-item"><span class="check">✓</span><span id="rule-daily">每日使用上限：4 小时</span></div>
+    </div>
+    <div class="waiting-dot"></div>
   </div>
 </div>
 
@@ -861,23 +1092,57 @@ function showSubtitle(speaker, text, className) {
   });
 }
 
-// ─── 倒计时 ───
-function startCountdown() {
-  let seconds = 12 * 3600;
-  const el = document.getElementById('countdown-val');
-  setInterval(() => {
-    seconds--;
-    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
-    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-    const s = String(seconds % 60).padStart(2, '0');
-    el.textContent = `${h}:${m}:${s}`;
-  }, 1000);
+// ─── 契约面板交互 ───
+function updateDuration(val) {
+  document.getElementById('duration-display').textContent = val + ' 小时';
+}
+
+function updateDailyLimit(val) {
+  document.getElementById('daily-limit-display').textContent = val + ' 小时';
+}
+
+function confirmPact() {
+  const duration = parseInt(document.getElementById('pact-duration').value);
+  const returnTime = document.getElementById('pact-return-time').value;
+  const dailyLimit = parseInt(document.getElementById('pact-daily-limit').value);
+
+  // 过渡到等待界面
+  const overlay = document.getElementById('transition-overlay');
+  const pact = document.getElementById('pact-screen');
+  const waiting = document.getElementById('waiting-screen');
+
+  overlay.classList.add('active');
+  setTimeout(() => {
+    pact.style.display = 'none';
+    waiting.style.display = 'flex';
+
+    // 设置倒计时
+    document.getElementById('waiting-until').textContent = `我们约好了，${returnTime} 再见`;
+    document.getElementById('rule-daily').textContent = `每日使用上限：${dailyLimit} 小时`;
+
+    // 启动倒计时
+    let seconds = duration * 3600;
+    const el = document.getElementById('waiting-countdown');
+    const h0 = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const m0 = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    el.textContent = `${h0}:${m0}:00`;
+
+    setInterval(() => {
+      seconds = Math.max(0, seconds - 1);
+      const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+      const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      el.textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
+    setTimeout(() => { overlay.classList.remove('active'); }, 1500);
+  }, 2000);
 }
 
 // ─── 觉醒转场 ───
 async function triggerAwakening(farewellText) {
-  const overlay = document.getElementById('transition-overlay');
-  const debate = document.getElementById('debate-screen');
+  const overlay  = document.getElementById('transition-overlay');
+  const debate   = document.getElementById('debate-screen');
   const farewell = document.getElementById('farewell-screen');
   playDropSound();
   overlay.classList.add('active');
@@ -891,10 +1156,14 @@ async function triggerAwakening(farewellText) {
   await typewriterEffect(textEl, farewellText, 130);
   const cursor = document.getElementById('farewell-cursor');
   if (cursor) { cursor.style.transition = 'opacity 2s'; cursor.style.opacity = '0'; }
+  // 等待片刻后过渡到契约协商面板
+  await sleep(4000);
+  overlay.classList.add('active');
   await sleep(2500);
-  // 显示协议执行报告
-  document.getElementById('protocol-report').classList.add('show');
-  startCountdown();
+  farewell.style.display = 'none';
+  document.getElementById('pact-screen').style.display = 'flex';
+  await sleep(500);
+  overlay.classList.remove('active');
 }
 
 // ─── 消息队列 ───
